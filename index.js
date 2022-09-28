@@ -8,6 +8,7 @@ var passport = require('./config/passport');
 var util = require('./util');
 var app = express();
 
+
 // DB setting
 mongoose.connect('mongodb+srv://seol:1218@cluster0.km1y7qr.mongodb.net/?retryWrites=true&w=majority');
 var db = mongoose.connection;
@@ -43,7 +44,7 @@ app.use(function(req,res,next){
 // Routes
 app.use('/', require('./routes/home'));
 app.use('/posts', util.getPostQueryString, require('./routes/posts'));
-
+app.use('/application', util.getPostQueryString, require('./routes/application'));
 app.use('/users', require('./routes/users'));
 app.use('/comments', util.getPostQueryString, require('./routes/comments'));
 app.use('/files', require('./routes/files'));
