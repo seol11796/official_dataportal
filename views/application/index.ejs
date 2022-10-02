@@ -32,7 +32,7 @@
             <tr>
               <td class="numId"><%= post.numId %></td>
               <td>
-                <a href="/application/<%= post._id %><%= getPostQueryString() %>" class="title-container">
+                <a href="/application/<%= post.numId %><%= getPostQueryString() %>" class="title-container">
                   <div data-search-highlight="title" class="title-ellipsis ellipsis float-left">
                     <span class="title-text"><%= post.title %></span>
                   </div>
