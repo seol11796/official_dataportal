@@ -4,7 +4,6 @@ var multer = require('multer');
 var upload = multer({ dest: 'uploadedFiles/' });
 var Post = require('../models/Post');
 var User = require('../models/User');
-var Comment = require('../models/Comment');
 var File = require('../models/File');
 var util = require('../util');
 
@@ -36,12 +35,6 @@ router.get('/', async function(req, res){
       { $skip: skip },
       { $limit: limit },
       { $lookup: {
-          from: 'comments',
-          localField: '_id',
-          foreignField: 'post',
-          as: 'comments'
-      } },
-      { $lookup: {
           from: 'files',
           localField: 'attachment',
           foreignField: '_id',
@@ -59,8 +52,7 @@ router.get('/', async function(req, res){
           views: 1,
           numId: 1,
           attachment: { $cond: [{$and: ['$attachment', {$not: '$attachment.isDeleted'}]}, true, false] },
-          createdAt: 1,
-          commentCount: { $size: '$comments'}
+          createdAt: 1
       } },
     ]).exec();
   }
@@ -103,18 +95,13 @@ router.post('/', util.isLoggedin, upload.single('attachment'), async function(re
 
 // show
 router.get('/:id', function(req, res){
-  var commentForm = req.flash('commentForm')[0] || { _id: null, form: {} };
-  var commentError = req.flash('commentError')[0] || { _id:null, parentComment: null, errors:{} };
-
   Promise.all([
-      Post.findOne({_id:req.params.id}).populate({ path: 'author', select: 'username' }).populate({path:'attachment',match:{isDeleted:false}}),
-      Comment.find({post:req.params.id}).sort('createdAt').populate({ path: 'author', select: 'username' })
+      Post.findOne({numId:req.params.id}).populate({ path: 'author', select: 'username' }).populate({path:'attachment',match:{isDeleted:false}})
     ])
-    .then(([post, comments]) => {
+    .then(([post]) => {
       post.views++;
       post.save();
-      var commentTrees = util.convertToTrees(comments, '_id','parentComment','childComments');
-      res.render('posts/show', { post:post, commentTrees:commentTrees, commentForm:commentForm, commentError:commentError});
+      res.render('posts/show', { post:post });
     })
     .catch((err) => {
       return res.json(err);
