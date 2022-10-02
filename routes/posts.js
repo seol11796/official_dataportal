@@ -56,7 +56,7 @@ router.get('/', async function(req, res){
       } },
     ]).exec();
   }
-
+  
   res.render('posts/index', {
     posts:posts,
     currentPage:page,
