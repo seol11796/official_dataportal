@@ -2,7 +2,6 @@ var express  = require('express');
 var router = express.Router();
 var Application = require('../models/Application');
 var User = require('../models/User');
-var Comment = require('../models/Comment');
 var util = require('../util');
 
 // Index
@@ -32,12 +31,6 @@ router.get('/', async function(req, res){
       { $sort : { createdAt: -1 } },
       { $skip: skip },
       { $limit: limit },
-      { $lookup: {
-          from: 'comments',
-          localField: '_id',
-          foreignField: 'post',
-          as: 'comments'
-      } },
       { $project: {
           title: 1,
           author: {
@@ -45,8 +38,7 @@ router.get('/', async function(req, res){
           },
           views: 1,
           numId: 1,
-          createdAt: 1,
-          commentCount: { $size: '$comments'}
+          createdAt: 1
       } },
     ]).exec();
   }
@@ -83,18 +75,13 @@ router.post('/', util.isLoggedin, function(req, res){
 
 // show
 router.get('/:id', function(req, res){
-  var commentForm = req.flash('commentForm')[0] || { _id: null, form: {} };
-  var commentError = req.flash('commentError')[0] || { _id:null, parentComment: null, errors:{} };
-
   Promise.all([
-      Application.findOne({_id:req.params.id}).populate({ path: 'author', select: 'username' }),
-      Comment.find({post:req.params.id}).sort('createdAt').populate({ path: 'author', select: 'username' })
+      Application.findOne({_id:req.params.id}).populate({ path: 'author', select: 'username' })
     ])
-    .then(([post, comments]) => {
+    .then(([post]) => {
       post.views++;
       post.save();
-      var commentTrees = util.convertToTrees(comments, '_id','parentComment','childComments');
-      res.render('application/show', { post:post, commentTrees:commentTrees, commentForm:commentForm, commentError:commentError});
+      res.render('application/show', { post:post });
     })
     .catch((err) => {
       return res.json(err);
@@ -120,7 +107,7 @@ router.get('/:id/edit', util.isLoggedin, checkPermission, function(req, res){
 // update
 router.put('/:id', util.isLoggedin, checkPermission, function(req, res){
   req.body.updatedAt = Date.now();
-  Application.findOneAndUpdate({_id:req.params.id}, req.body, {runValidators:true}, function(err, post){
+  Application.findOneAndUpdate({numId:req.params.id}, req.body, {runValidators:true}, function(err, post){
     if(err){
       req.flash('post', req.body);
       req.flash('errors', util.parseError(err));
