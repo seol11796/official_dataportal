@@ -56,8 +56,17 @@ router.get('/', async function(req, res){
       } },
     ]).exec();
   }
-  
-  res.render('posts/index', {
+  if (req.user.id == '633460883cdb84a4db9de691') {
+    res.render('posts/adminIndex', {
+      posts:posts,
+      currentPage:page,
+      maxPage:maxPage,
+      limit:limit,
+      searchType:req.query.searchType,
+      searchText:req.query.searchText
+    });
+  }
+  else res.render('posts/index', {
     posts:posts,
     currentPage:page,
     maxPage:maxPage,
