@@ -64,7 +64,7 @@ router.get('/', async function(req, res){
       } },
     ]).exec();
   }
-
+  
   res.render('posts/index', {
     posts:posts,
     currentPage:page,
@@ -105,12 +105,15 @@ router.post('/', util.isLoggedin, upload.single('attachment'), async function(re
 router.get('/:id', function(req, res){
   var commentForm = req.flash('commentForm')[0] || { _id: null, form: {} };
   var commentError = req.flash('commentError')[0] || { _id:null, parentComment: null, errors:{} };
-
+  
   Promise.all([
-      Post.findOne({_id:req.params.id}).populate({ path: 'author', select: 'username' }).populate({path:'attachment',match:{isDeleted:false}}),
-      Comment.find({post:req.params.id}).sort('createdAt').populate({ path: 'author', select: 'username' })
+      Post.findOne({numId:req.params.id}).populate({ path: 'author', select: 'username' }).populate({path:'attachment',match:{isDeleted:false}})
+      // Comment.find({post:mongooseId}).sort('createdAt').populate({ path: 'author', select: 'username' })
+      // Post.findOne({_id:req.params.id}).populate({ path: 'author', select: 'username' }).populate({path:'attachment',match:{isDeleted:false}}),
+      // Comment.find({post:req.params.id}).sort('createdAt').populate({ path: 'author', select: 'username' })
     ])
-    .then(([post, comments]) => {
+    .then(([post]) => {
+      console.log(post)
       post.views++;
       post.save();
       var commentTrees = util.convertToTrees(comments, '_id','parentComment','childComments');
