@@ -76,7 +76,7 @@ router.post('/', util.isLoggedin, function(req, res){
 // show
 router.get('/:id', function(req, res){
   Promise.all([
-      Application.findOne({_id:req.params.id}).populate({ path: 'author', select: 'username' })
+      Application.findOne({numId:req.params.id}).populate({ path: 'author', select: 'username' })
     ])
     .then(([post]) => {
       post.views++;
