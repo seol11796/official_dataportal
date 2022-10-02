@@ -61,6 +61,12 @@
 
       <div class="row mb-3">
 
+        <div class="col-2">
+          <% if(isAuthenticated){ %>
+            <a class="btn btn-primary" href="/posts/new<%= getPostQueryString() %>">New</a>
+          <% } %>
+        </div>
+
         <nav class="col-8">
           <%
             var offset = 2;
