@@ -94,11 +94,15 @@ router.post('/', util.isLoggedin, upload.single('attachment'), async function(re
       return res.redirect('/posts/new'+res.locals.getPostQueryString());
     }
     if(attachment){
-      attachment.postId = post._id;
+
+      //attachment.postId = post_id;
       attachment.save();
+
     }
     res.redirect('/posts'+res.locals.getPostQueryString(false, { page:1, searchText:'' }));
+  
   });
+
 });
 
 // show

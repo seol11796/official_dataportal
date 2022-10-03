@@ -22,6 +22,9 @@ router.post('/', function(req, res){
   });
 });
 
+
+
+
 // show
 router.get('/:username', util.isLoggedin, checkPermission, function(req, res){
   User.findOne({username:req.params.username}, function(err, user){
@@ -70,6 +73,11 @@ router.put('/:username', util.isLoggedin, checkPermission, function(req, res, ne
       });
   });
 });
+
+
+
+
+
 
 module.exports = router;
 

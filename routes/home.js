@@ -10,6 +10,9 @@ router.get('/about', function(req, res){
   res.render('home/about');
 });
 
+
+
+
 // Login
 router.get('/login', function (req,res) {
   var username = req.flash('username')[0];
@@ -20,19 +23,32 @@ router.get('/login', function (req,res) {
   });
 });
 
+
+
 // Post Login
 router.post('/login',
   function(req,res,next){
     var errors = {};
     var isValid = true;
 
+    // admin 관련 추가내용
+    if(req.body.username == 'konkuk2'){
+      
+      //res.redirect('/');
+    
+    }
+
+
     if(!req.body.username){
+
       isValid = false;
       errors.username = 'Username is required!';
     }
     if(!req.body.password){
+      
       isValid = false;
       errors.password = 'Password is required!';
+
     }
 
     if(isValid){
@@ -43,11 +59,18 @@ router.post('/login',
       res.redirect('/login');
     }
   },
+
+
   passport.authenticate('local-login', {
     successRedirect : '/posts',
     failureRedirect : '/login'
   }
+
+  
+  
 ));
+
+
 
 // Logout
 router.get('/logout', function(req, res) {
