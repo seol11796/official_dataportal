@@ -41,12 +41,16 @@ app.use(function(req,res,next){
   next();
 });
 
+
 // Routes
 app.use('/', require('./routes/home'));
+//app.use('/adminpage',require('./routes/adminpage'));
 app.use('/posts', util.getPostQueryString, require('./routes/posts'));
+app.use('/usage', util.getPostQueryString, require('./routes/usage'));
 app.use('/application', util.getPostQueryString, require('./routes/application'));
 app.use('/users', require('./routes/users'));
 app.use('/files', require('./routes/files'));
+
 
 // Port setting
 var port = 3000;
