@@ -4,7 +4,7 @@ var multer = require('multer');
 var upload = multer({ dest: 'uploadedFiles/' });
 var Usage = require('../models/Usage');
 var User = require('../models/User');
-var Comment = require('../models/Comment');
+//var Comment = require('../models/Comment');
 var File = require('../models/File');
 var util = require('../util');
 
@@ -35,12 +35,7 @@ router.get('/', async function(req, res){
       { $sort : { createdAt: -1 } },
       { $skip: skip },
       { $limit: limit },
-      { $lookup: {
-          from: 'comments',
-          localField: '_id',
-          foreignField: 'usage',
-          as: 'comments'
-      } },
+    
       { $lookup: {
           from: 'files',
           localField: 'attachment',
@@ -60,8 +55,9 @@ router.get('/', async function(req, res){
           numId: 1,
           attachment: { $cond: [{$and: ['$attachment', {$not: '$attachment.isDeleted'}]}, true, false] },
           createdAt: 1,
-          commentCount: { $size: '$comments'}
-      } },
+          
+      },
+    },
     ]).exec();
   }
 
@@ -107,18 +103,20 @@ router.post('/', util.isLoggedin, upload.single('attachment'), async function(re
 
 // show
 router.get('/:id', function(req, res){
-  var commentForm = req.flash('commentForm')[0] || { _id: null, form: {} };
-  var commentError = req.flash('commentError')[0] || { _id:null, parentComment: null, errors:{} };
+  //var commentForm = req.flash('commentForm')[0] || { _id: null, form: {} };
+  //var commentError = req.flash('commentError')[0] || { _id:null, parentComment: null, errors:{} };
 
   Promise.all([
-      Usage.findOne({_id:req.params.id}).populate({ path: 'author', select: 'username' }).populate({path:'attachment',match:{isDeleted:false}}),
-      Comment.find({usage:req.params.id}).sort('createdAt').populate({ path: 'author', select: 'username' })
+      Usage.findOne({_id:req.params.id})
+      .populate({ path: 'author', select: 'username' })
+      .populate({path:'attachment',match:{isDeleted:false}}),
+
+     
     ])
-    .then(([usage, comments]) => {
+    .then(([usage]) => {
       usage.views++;
       usage.save();
-      var commentTrees = util.convertToTrees(comments, '_id','parentComment','childComments');
-      res.render('usage/show', { usage:usage, commentTrees:commentTrees, commentForm:commentForm, commentError:commentError});
+      res.render('usage/show', { usage:usage});
     })
     .catch((err) => {
       return res.json(err);
