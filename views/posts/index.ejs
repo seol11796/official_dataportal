@@ -32,8 +32,7 @@
             <tr>
               <td class="numId"><%= post.numId %></td>
               <td>
-                
-                <a href="/posts/<%= post._id%><%= getPostQueryString() %>" class="title-container">
+                <a href="/posts/<%= post.numId %><%= getPostQueryString() %>" class="title-container">
                   <div data-search-highlight="title" class="title-ellipsis ellipsis float-left">
                     <span class="title-text"><%= post.title %></span>
                   </div>
@@ -61,12 +60,6 @@
       </table>
 
       <div class="row mb-3">
-
-        <div class="col-2">
-          <% if(isAuthenticated){ %>
-            <a class="btn btn-primary" href="/posts/new<%= getPostQueryString() %>">New</a>
-          <% } %>
-        </div>
 
         <nav class="col-8">
           <%

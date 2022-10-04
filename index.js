@@ -49,7 +49,6 @@ app.use('/posts', util.getPostQueryString, require('./routes/posts'));
 app.use('/usage', util.getPostQueryString, require('./routes/usage'));
 app.use('/application', util.getPostQueryString, require('./routes/application'));
 app.use('/users', require('./routes/users'));
-app.use('/comments', util.getPostQueryString, require('./routes/comments'));
 app.use('/files', require('./routes/files'));
 
 
