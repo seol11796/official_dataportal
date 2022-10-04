@@ -23,27 +23,30 @@
         </thead>
 
         <tbody>
-            <% if(applications == null || applications.length == 0){ %>
-                <tr>
-                  <td colspan=5> There is no data to show :( </td>
-                </tr>
-              <% } %> 
-          <% applications.forEach(function(post) { %>
+          <% if(posts == null || posts.length == 0){ %>
+            <tr>
+              <td colspan=5> There is no data to show :( </td>
+            </tr>
+          <% } %>
+          <% posts.forEach(function(post) { %>
             <tr>
               <td class="numId"><%= post.numId %></td>
               <td>
-                <a href="/application/<%= post.numId %><%= getPostQueryString() %>" class="title-container">
+                <a href="/posts/<%= post.numId %><%= getPostQueryString() %>" class="title-container">
                   <div data-search-highlight="title" class="title-ellipsis ellipsis float-left">
                     <span class="title-text"><%= post.title %></span>
                   </div>
                   <% if(post.commentCount){ %>
                     <small class="title-comments d-inline-block pl-2">(<%= post.commentCount %>)</small>
                   <% } %>
+                  <% if(post.attachment){ %>
+                    <small class="title-attachment d-inline-block pl-2">📁</small>
+                  <% } %>
                 </a>
               </td>
               <td class="views"><%= post.views %></td>
               <td class="author">
-                <a href="/application<%= getPostQueryString(false, { searchType:'author!', searchText:post.author.username }) %>">
+                <a href="/posts<%= getPostQueryString(false, { searchType:'author!', searchText:post.author.username }) %>">
                   <div data-search-highlight="author" class="ellipsis"><%= post.author ? post.author.username : "" %></div>
                 </a>
               </td>
@@ -53,13 +56,17 @@
             </tr>
           <% }) %>
         </tbody>
+
       </table>
+
       <div class="row mb-3">
+
         <div class="col-2">
           <% if(isAuthenticated){ %>
-            <a class="btn btn-primary" href="/application/new<%= getPostQueryString() %>">New</a>
+            <a class="btn btn-primary" href="/posts/new<%= getPostQueryString() %>">New</a>
           <% } %>
         </div>
+
         <nav class="col-8">
           <%
             var offset = 2;
@@ -68,23 +75,26 @@
           %>
           <ul class="pagination pagination-sm justify-content-center align-items-center h-100 mb-0">
             <li class="page-item <%= previousBtnEnabled?'':'disabled' %>">
-              <a class="page-link" href="/application<%= getPostQueryString(false, {page:currentPage-1}) %>" <%= previousBtnEnabled?'':'tabindex=-1' %>>&laquo;</a>
+              <a class="page-link" href="/posts<%= getPostQueryString(false, {page:currentPage-1}) %>" <%= previousBtnEnabled?'':'tabindex=-1' %>>&laquo;</a>
             </li>
             <% for(i=1;i<=maxPage;i++){ %>
               <% if(i==1 || i==maxPage || (i>=currentPage-offset && i<=currentPage+offset)){ %>
-                <li class="page-item <%= currentPage==i?'active':'' %>"><a class="page-link" href="/application<%= getPostQueryString(false, {page:i}) %>"> <%= i %> </a></li>
+                <li class="page-item <%= currentPage==i?'active':'' %>"><a class="page-link" href="/posts<%= getPostQueryString(false, {page:i}) %>"> <%= i %> </a></li>
               <% } else if(i==2 || i==maxPage-1){ %>
                 <li><a class="page-link">...</a></li>
               <% } %>
             <% } %>
             <li class="page-item <%= nextBtnEnabled?'':'disabled' %>">
-              <a class="page-link" href="/application<%= getPostQueryString(false, {page:currentPage+1}) %>" <%= nextBtnEnabled?'':'tabindex=-1' %>>&raquo;</a>
+              <a class="page-link" href="/posts<%= getPostQueryString(false, {page:currentPage+1}) %>" <%= nextBtnEnabled?'':'tabindex=-1' %>>&raquo;</a>
             </li>
           </ul>
         </nav>
+
       </div>
+
       <form action="/posts" method="get" class="post-index-tool">
         <div class="form-row">
+
           <div class="form-group col-3">
             <label>Show</label>
             <select name="limit" class="custom-select" onchange="this.parentElement.parentElement.parentElement.submit()">
@@ -93,6 +103,7 @@
               <option value="20" <%= limit==20?'selected':'' %>>20 posts</option>
             </select>
           </div>
+
           <div class="form-group col-9">
             <label>Search</label>
             <div class="input-group">
@@ -108,8 +119,10 @@
               </div>
             </div>
           </div>
+
         </div>
       </form>
+
     </div>
   </body>
 </html>
