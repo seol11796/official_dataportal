@@ -115,7 +115,7 @@ router.post(
         return res.redirect("/posts/new" + res.locals.getPostQueryString());
       }
       if (attachment) {
-        attachment.postId = post._id;
+        attachment.postId = post.numId;
         attachment.save();
       }
       res.redirect(
@@ -148,14 +148,14 @@ router.get("/:id/edit", util.isLoggedin, checkPermission, function (req, res) {
   var post = req.flash("post")[0];
   var errors = req.flash("errors")[0] || {};
   if (!post) {
-    Post.findOne({ _id: req.params.id })
+    Post.findOne({ numId: req.params.id })
       .populate({ path: "attachment", match: { isDeleted: false } })
       .exec(function (err, post) {
         if (err) return res.json(err);
         res.render("posts/edit", { post: post, errors: errors });
       });
   } else {
-    post._id = req.params.id;
+    post.numId = req.params.id;
     res.render("posts/edit", { post: post, errors: errors });
   }
 });
@@ -167,7 +167,7 @@ router.put(
   checkPermission,
   upload.single("newAttachment"),
   async function (req, res) {
-    var post = await Post.findOne({ _id: req.params.id }).populate({
+    var post = await Post.findOne({ numId: req.params.id }).populate({
       path: "attachment",
       match: { isDeleted: false },
     });
@@ -179,7 +179,7 @@ router.put(
       : post.attachment;
     req.body.updatedAt = Date.now();
     Post.findOneAndUpdate(
-      { _id: req.params.id },
+      { numId: req.params.id },
       req.body,
       { runValidators: true },
       function (err, post) {
@@ -203,7 +203,7 @@ router.put(
 
 // destroy
 router.delete("/:id", util.isLoggedin, checkPermission, function (req, res) {
-  Post.deleteOne({ _id: req.params.id }, function (err) {
+  Post.deleteOne({ numId: req.params.id }, function (err) {
     if (err) return res.json(err);
     res.redirect("/posts" + res.locals.getPostQueryString());
   });
@@ -213,7 +213,7 @@ module.exports = router;
 
 // private functions
 function checkPermission(req, res, next) {
-  Post.findOne({ _id: req.params.id }, function (err, post) {
+  Post.findOne({ numId: req.params.id }, function (err, post) {
     if (err) return res.json(err);
     if (post.author != req.user.id) return util.noPermission(req, res);
 
