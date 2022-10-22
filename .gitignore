@@ -157,3 +157,6 @@ package-lock.json
 
 # Legacy gitignore
 uploadedFiles
+
+# secrets
+*ApiConfig.json
