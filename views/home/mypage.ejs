@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+        p{
+      border-width: 8px;
+      border-style: solid;
+      border-color: rgb(3, 3, 3);
+      padding: 12px;
+      background-color: rgb(173, 231, 212);
+
+      /* 축약형 */
+      border: 5px solid rgba(0, 1, 2, 0);
+    }
+
+   
+    
+    </style>
+    <%- include('../partials/head') %>
+  </head>
+  <body>
+    <%- include('../partials/nav') %>
+
+    <div class="container mb-3">
+
+      <div class="container px-4 py-5" id="icon-grid">
+
+        <h2 class="pb-2 border-bottom">건대입구역</h2>
+
+        <h4>2호선</h4>
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5">
+          <div class="col d-flex align-items-start">
+            <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#home"/></svg>
+            <div>
+              <h4 class="fw-bold mb-0"></h4>
+              <p>현재 건대입구역의 미세먼지 정도는 나쁨이에요.</p>
+            </div>
+          </div>
+          <div class="col d-flex align-items-start">
+            <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#bootstrap"/></svg>
+            <div>
+              
+              <p>물품 보관함의 위치는 6번 출구 주변, 2번 출구 주변, 5번 출구 주변이에요</p>
+              <p>주변에 뚝섬유원지와 서울 어린이 대공원, 건국대학교가 있어요.</p>
+            </div>
+          </div>
+          
+          <div class="col d-flex align-items-start">
+            <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#calendar3"/></svg>
+            <div>
+              <p>
+                <i class="fa-regular fa-face-smile"></i>
+                현재 건대입구역은 "쾌적"해요!</p>
+            </div>
+       
+          </div>
+          
+          
+    
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
