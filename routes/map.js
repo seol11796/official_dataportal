@@ -6,6 +6,8 @@ var Post = require("../models/Post");
 var User = require("../models/User");
 var File = require("../models/File");
 var util = require("../util");
+var complexityService = require("../service/complexityService");
+var finedustService = require("../config/finedustApiConfig.json");
 
 // direct request
 router.get("/", function (req, res) {
@@ -26,6 +28,8 @@ router.get("/", function (req, res) {
 
 //serch
 router.get("/:stationName", async function (req, res) {
+  complexityService.getComplexity(req.params.stationName);
+  finedustService.getFinedust(req.params.stationName);
   var page = Math.max(1, parseInt(req.query.page));
   var limit = Math.max(1, parseInt(req.query.limit));
   page = !isNaN(page) ? page : 1;
