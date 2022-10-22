@@ -7,8 +7,25 @@ var User = require("../models/User");
 var File = require("../models/File");
 var util = require("../util");
 
-// Index
-router.get("/", async function (req, res) {
+// direct request
+router.get("/", function (req, res) {
+  Promise.all([
+    Post.findOne({ numId: req.params.id })
+      .populate({ path: "author", select: "username" })
+      .populate({ path: "attachment", match: { isDeleted: false } }),
+  ])
+    .then(([post]) => {
+      post.views++;
+      post.save();
+      res.render("posts/show", { post: post });
+    })
+    .catch((err) => {
+      return res.json(err);
+    });
+});
+
+//serch
+router.get("/:stationName", async function (req, res) {
   var page = Math.max(1, parseInt(req.query.page));
   var limit = Math.max(1, parseInt(req.query.limit));
   page = !isNaN(page) ? page : 1;
@@ -90,44 +107,8 @@ router.get("/", async function (req, res) {
     });
 });
 
-// New
-router.get("/new", util.isLoggedin, function (req, res) {
-  var post = req.flash("post")[0] || {};
-  var errors = req.flash("errors")[0] || {};
-  res.render("posts/new", { post: post, errors: errors });
-});
-
-// create
-router.post(
-  "/",
-  util.isLoggedin,
-  upload.single("attachment"),
-  async function (req, res) {
-    var attachment = req.file
-      ? await File.createNewInstance(req.file, req.user._id)
-      : undefined;
-    req.body.attachment = attachment;
-    req.body.author = req.user._id;
-    Post.create(req.body, function (err, post) {
-      if (err) {
-        req.flash("post", req.body);
-        req.flash("errors", util.parseError(err));
-        return res.redirect("/posts/new" + res.locals.getPostQueryString());
-      }
-      if (attachment) {
-        attachment.postId = post.numId;
-        attachment.save();
-      }
-      res.redirect(
-        "/posts" +
-          res.locals.getPostQueryString(false, { page: 1, searchText: "" })
-      );
-    });
-  }
-);
-
-// show
-router.get("/:id", function (req, res) {
+// showing route
+router.get("/:startStationName/:endStationName", function (req, res) {
   Promise.all([
     Post.findOne({ numId: req.params.id })
       .populate({ path: "author", select: "username" })
@@ -141,72 +122,6 @@ router.get("/:id", function (req, res) {
     .catch((err) => {
       return res.json(err);
     });
-});
-
-// edit
-router.get("/:id/edit", util.isLoggedin, checkPermission, function (req, res) {
-  var post = req.flash("post")[0];
-  var errors = req.flash("errors")[0] || {};
-  if (!post) {
-    Post.findOne({ numId: req.params.id })
-      .populate({ path: "attachment", match: { isDeleted: false } })
-      .exec(function (err, post) {
-        if (err) return res.json(err);
-        res.render("posts/edit", { post: post, errors: errors });
-      });
-  } else {
-    post.numId = req.params.id;
-    res.render("posts/edit", { post: post, errors: errors });
-  }
-});
-
-// update
-router.put(
-  "/:id",
-  util.isLoggedin,
-  checkPermission,
-  upload.single("newAttachment"),
-  async function (req, res) {
-    var post = await Post.findOne({ numId: req.params.id }).populate({
-      path: "attachment",
-      match: { isDeleted: false },
-    });
-    if (post.attachment && (req.file || !req.body.attachment)) {
-      post.attachment.processDelete();
-    }
-    req.body.attachment = req.file
-      ? await File.createNewInstance(req.file, req.user._id, req.params.id)
-      : post.attachment;
-    req.body.updatedAt = Date.now();
-    Post.findOneAndUpdate(
-      { numId: req.params.id },
-      req.body,
-      { runValidators: true },
-      function (err, post) {
-        if (err) {
-          req.flash("post", req.body);
-          req.flash("errors", util.parseError(err));
-          return res.redirect(
-            "/posts/" +
-              req.params.id +
-              "/edit" +
-              res.locals.getPostQueryString()
-          );
-        }
-        res.redirect(
-          "/posts/" + req.params.id + res.locals.getPostQueryString()
-        );
-      }
-    );
-  }
-);
-
-// destroy
-router.delete("/:id", util.isLoggedin, checkPermission, function (req, res) {
-  Post.deleteOne({ numId: req.params.id }, function (err) {
-    if (err) return res.json(err);
-    res.redirect("/posts" + res.locals.getPostQueryString());
-  });
 });
 
 module.exports = router;
