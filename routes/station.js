@@ -9,6 +9,8 @@ var util = require("../util");
 
 // get station information
 router.get("/:stationName", async function (req, res) {
+  complexityService.getComplexity(req.params.stationName);
+  finedustService.getFinedust(req.params.stationName);
   var page = Math.max(1, parseInt(req.query.page));
   var limit = Math.max(1, parseInt(req.query.limit));
   page = !isNaN(page) ? page : 1;
