@@ -15,7 +15,7 @@ var finedustService = require("../service/finedustService");
 router.get("/", function (req, res) {
  // 여기서 해당 station name 매개변수로 저장할 수도 ?
   res.render("maps/index",{
-    subway_name : req.param('subway_name')
+    subway_name : req.query.subway_name
   });
 
 });

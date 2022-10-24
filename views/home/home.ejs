@@ -3,16 +3,53 @@
   <head>
     <style>
         p{
+          color:black;
       border-width: 8px;
       border-style: solid;
-      border-color: rgb(3, 3, 3);
+      border-color: rgb(182, 157, 157);
       padding: 12px;
-      background-color: rgb(173, 231, 212);
+      background-color: rgb(231, 231, 231);
 
       /* 축약형 */
-      border: 5px solid rgba(0, 1, 2, 0);
+      border: 5px solid rgba(82, 99, 116, 0);
+      height: 300px;
+      border-radius: 1.5rem;
+      margin-right: 15px;
     }
 
+    .full_screen
+      {
+      
+      background-color: aliceblue;
+          height: 600px;
+        
+          
+        
+      }
+    
+    .search {
+      
+      color:rgb(15, 150, 150);
+
+    }
+
+    img {
+      width: 600px;
+      height : 400px;
+    }
+    
+    .d-flex {
+      margin-left: 15px;
+      width: 450px;
+    }
+
+    .navbar-brand {
+      margin-left : 350px;
+      
+    }
+    
+    
+ 
   Text {
     font-size: 35px;
     font-weight:bold;
@@ -23,7 +60,7 @@
     <%- include('../partials/head') %>
   </head>
   <body>
-   
+   <div class="full_screen">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container-fluid">
         <a class="navbar-brand" href="/">지하철 날씨</a>
@@ -60,11 +97,11 @@
 
       <div class="container px-4 py-5" id="icon-grid">
 
-        <h2 class="pb-2 border-bottom">건대입구역</h2>
+        <h2 class="pb-2 border-bottom">지하철 날씨 정보를 확인하세요</h2>
 
-        <h4>2호선</h4>
+       
         
-      <div style="width:200px; height:150px; float:left "><h3>알고싶은 지하철 역을 검색하시오.</h3></div>
+      <div class="search" style="width:200px; height:150px; float:left "><p>지하철 날씨 사이트는 역의 혼잡도, 공기질, 편의시설 위치를 제공합니다.</p></div>
       <div style="width:200px; height:150px; float:left;">
         <img src="https://subweatherimages.s3.ap-northeast-2.amazonaws.com/map.jpg">
         </div>

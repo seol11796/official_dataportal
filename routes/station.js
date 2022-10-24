@@ -7,13 +7,30 @@ var User = require("../models/User");
 var File = require("../models/File");
 var util = require("../util");
 
+
+
+router.get("/",function(req,res){
+  res.render("stations/about",{
+    subway_name : req.param('subway_name')
+  }
+
+);
+})
+
+
+
 // get station information
 router.get("/:stationName", async function (req, res) {
   complexityService.getComplexity(req.params.stationName);
   finedustService.getFinedust(req.params.stationName);
 
-  res.render("stations/about");
+  res.render("stations/about",
+  {
+    subway_name: req.param('subway_name')
+  }
+  );
 });
+
 
 module.exports = router;
 
