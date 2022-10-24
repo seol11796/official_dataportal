@@ -17,7 +17,6 @@ router.get("/", function (req, res) {
   res.render("maps/index",{
     subway_name : req.param('subway_name')
   });
-
 });
 
 //serch
@@ -30,7 +29,6 @@ router.get("/:stationName", async function (req, res) {
 // showing route
 router.get("/:startStationName/:endStaionName", function (req, res) {
   res.render("maps/index");
-
 });
 
 module.exports = router;
