@@ -11,11 +11,24 @@ var util = require("../util");
 var complexityService = require("../service/complexityService");
 var finedustService = require("../service/finedustService");
 
-// direct request
-router.get("/", function (req, res) {
- // 여기서 해당 station name 매개변수로 저장할 수도 ?
-  res.render("maps/index",{
-    subway_name : req.param('subway_name')
+router.get("/", async function (req, res) {
+  console.log(req.query.subway_name);
+  complex = await complexityService.getComplexity(req.query.subway_name);
+  finedust = await finedustService.getFinedust(req.query.subway_name);
+
+  console.log(complex);
+
+  res.render("maps/index", {
+    station_name: req.query.subway_name,
+    line_number: null,
+    geton_mincpx: complex[0],
+    geton_maxcpx: complex[1],
+    getoff_mincpx: complex[2],
+    getoff_maxcpx: complex[3],
+    pm: null,
+    locker_location: null,
+    nearby_building: null,
+    subway_image: null,
   });
 });
 
