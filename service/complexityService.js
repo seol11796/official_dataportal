@@ -11,6 +11,7 @@ async function getComplexity(stationName) {
   var requesturl = complexRequireURLResolver(authKey, stationName, dayOfWeek);
   var res_json = JSON.parse(await getJSON(requesturl));
   var keys = [0, 0, 0, 0];
+  // 상행 여유, 상행 혼잡, 하행 여유, 하행 혼잡
   var values = [100.0, 0.0, 100.0, 0.0];
 
   for (var loop = 0; loop < 2; loop++) {
