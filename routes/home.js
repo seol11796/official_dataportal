@@ -4,10 +4,7 @@ var passport = require("../config/passport");
 
 // Home
 router.get("/", function (req, res) {
-  res.render("home/welcome");
-});
-router.get("/about", function (req, res) {
-  res.render("home/about");
+  res.render("home/home");
 });
 
 // Login
@@ -45,7 +42,7 @@ router.post(
   },
 
   passport.authenticate("local-login", {
-    successRedirect: "/posts",
+    successRedirect: "/",
     failureRedirect: "/login",
   })
 );
@@ -54,6 +51,11 @@ router.post(
 router.get("/logout", function (req, res) {
   req.logout();
   res.redirect("/");
+});
+
+//mypage
+router.get("/mypage", function (req, res) {
+  res.render("home/mypage");
 });
 
 module.exports = router;
