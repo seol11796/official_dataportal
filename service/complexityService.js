@@ -1,10 +1,12 @@
 var api_config = require("../config/complexityApiConfig.json");
+var stationNumbering = require("../config/complexityStationNumber.json");
 var request = require("request");
 
 async function getComplexity(stationName) {
   const authKey = api_config.Encoding;
 
   var requesturl = complexRequireURLResolver(authKey, stationName);
+  console.log(requesturl);
   var res_json = JSON.parse(await getJSON(requesturl));
   var keys = [0, 0, 0, 0];
   var values = [100.0, 0.0, 100.0, 0.0];
@@ -43,8 +45,14 @@ function getJSON(url) {
 }
 
 function getStationNumber(stationName) {
-  stationNumber = stationName;
-  return 3;
+  for (var i = 1; i < 9; i++) {
+    var checkStation =
+      stationNumbering[i.toString()].hasOwnProperty(stationName);
+    if (checkStation) {
+      return stationNumbering[i.toString()][stationName];
+    }
+  }
+  return -1;
 }
 
 function complexRequireURLResolver(key, stationName) {
