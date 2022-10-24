@@ -1,31 +1,41 @@
 var api_config = require("../config/finedustApiConfig.json");
 var request = require("request");
-var xml2js = require('xml-js');
-
-
-
+var xml2js = require("xml-js");
 
 async function getFinedust(stationName) {
   authKey = api_config.authKey;
 
-
   geturl = finedustRequireURLResolver(authKey, stationName);
-  request(geturl, (err, response, body) => {
-    if (err) throw err;
-    var xmlToJson = xml2js.xml2json(body, {spaces:4});
-    //console.log(xmlToJson);
-    var res_json = JSON.parse(xmlToJson); 
-    console.log(res_json.elements.elements[2]); //elements의 elements의 row부분 elements의 pmq
-    
-    
-    })
+  res_xml = await getXml(geturl);
 
- 
+  var res_json = JSON.parse(
+    xml2js.xml2json(res_xml, { compact: true, spaces: 4 })
+  );
+
+  var ret = new Object();
+
+  ret.stationName = stationName;
+  ret.PMq = res_json["airPolutionInfo"]["row"]["PMq"];
+  ret.checkDate = res_json["airPolutionInfo"]["row"]["CHECKDATE"];
+
+  return ret;
+}
+
+function getXml(url) {
+  return new Promise(function (resolve, reject) {
+    request(url, function (err, res, body) {
+      if (!err && res.statusCode == 200) {
+        resolve(body);
+      } else {
+        reject(err);
+      }
+    });
+  });
 }
 
 function getStationNumber(stationName) {
   stationNumber = stationName;
-  return 3;
+  return 20;
 }
 
 function finedustRequireURLResolver(key, stationName) {
@@ -34,11 +44,9 @@ function finedustRequireURLResolver(key, stationName) {
   start_station = getStationNumber(stationName);
   end_station = getStationNumber(stationName);
 
-
   return base_url + start_station + "/" + end_station;
-}//http://openapi.seoul.go.kr:8088/7963444664796a703130395845777855/xml/airPolutionInfo/(시작역 번호)/(끝역 번호)/
+}
 
 module.exports = {
   getFinedust,
 };
-
