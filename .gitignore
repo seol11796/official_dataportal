@@ -160,3 +160,4 @@ uploadedFiles
 
 # secrets
 *ApiConfig.json
+s3Handling*
