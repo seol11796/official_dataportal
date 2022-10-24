@@ -11,77 +11,8 @@ var util = require("../util");
 router.get("/:stationName", async function (req, res) {
   complexityService.getComplexity(req.params.stationName);
   finedustService.getFinedust(req.params.stationName);
-  var page = Math.max(1, parseInt(req.query.page));
-  var limit = Math.max(1, parseInt(req.query.limit));
-  page = !isNaN(page) ? page : 1;
-  limit = !isNaN(limit) ? limit : 10;
 
-  var skip = (page - 1) * limit;
-  var maxPage = 0;
-  var searchQuery = await createSearchQuery(req.query);
-  var usage = [];
-
-  if (searchQuery) {
-    var count = await Usage.countDocuments(searchQuery);
-    maxPage = Math.ceil(count / limit);
-    usage = await Usage.aggregate([
-      { $match: searchQuery },
-      {
-        $lookup: {
-          from: "users",
-          localField: "author",
-          foreignField: "_id",
-          as: "author",
-        },
-      },
-      { $unwind: "$author" },
-      { $sort: { createdAt: -1 } },
-      { $skip: skip },
-      { $limit: limit },
-
-      {
-        $lookup: {
-          from: "files",
-          localField: "attachment",
-          foreignField: "_id",
-          as: "attachment",
-        },
-      },
-      {
-        $unwind: {
-          path: "$attachment",
-          preserveNullAndEmptyArrays: true,
-        },
-      },
-      {
-        $project: {
-          title: 1,
-          author: {
-            username: 1,
-          },
-          views: 1,
-          numId: 1,
-          attachment: {
-            $cond: [
-              { $and: ["$attachment", { $not: "$attachment.isDeleted" }] },
-              true,
-              false,
-            ],
-          },
-          createdAt: 1,
-        },
-      },
-    ]).exec();
-  }
-
-  res.render("usage/index", {
-    usage: usage,
-    currentPage: page,
-    maxPage: maxPage,
-    limit: limit,
-    searchType: req.query.searchType,
-    searchText: req.query.searchText,
-  });
+  res.render("stations/about");
 });
 
 module.exports = router;
