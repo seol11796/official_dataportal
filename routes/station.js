@@ -8,11 +8,18 @@ var File = require("../models/File");
 var util = require("../util");
 
 // get station information
-router.get("/:stationName", async function (req, res) {
-  complexityService.getComplexity(req.params.stationName);
-  finedustService.getFinedust(req.params.stationName);
+router.get("/", async function (req, res) {
+  complex = await complexityService.getComplexity(req.query.subway_name);
+  finedust = await finedustService.getFinedust(req.query.subway_name);
 
-  res.render("stations/about");
+  res.render("stations/about", {
+    station_name: req.query.subway_name,
+    station_number: null,
+    complexity_state: null,
+    dust_state: null,
+    locker_location: null,
+    nearby_building: null,
+  });
 });
 
 module.exports = router;

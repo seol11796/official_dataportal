@@ -1,4 +1,5 @@
 var api_config = require("../config/finedustApiConfig.json");
+var stationNumbering = require("../config/finedustStationNumber.json");
 var request = require("request");
 var xml2js = require("xml-js");
 
@@ -34,8 +35,14 @@ function getXml(url) {
 }
 
 function getStationNumber(stationName) {
-  stationNumber = stationName;
-  return 20;
+  for (var i = 1; i < 9; i++) {
+    var checkStation =
+      stationNumbering[i.toString()].hasOwnProperty(stationName);
+    if (checkStation) {
+      return stationNumbering[i.toString()][stationName];
+    }
+  }
+  return -1;
 }
 
 function finedustRequireURLResolver(key, stationName) {
