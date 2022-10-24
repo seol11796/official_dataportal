@@ -29,6 +29,9 @@ app.use(methodOverride("_method"));
 app.use(flash());
 app.use(session({ secret: "MySecret", resave: true, saveUninitialized: true }));
 
+
+
+
 // Passport
 app.use(passport.initialize());
 app.use(passport.session());

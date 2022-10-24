@@ -2,16 +2,21 @@ var express = require("express");
 var router = express.Router();
 var multer = require("multer");
 var upload = multer({ dest: "uploadedFiles/" });
-var Post = require("../models/Post");
+var Usage = require("../models/Usage");
 var User = require("../models/User");
 var File = require("../models/File");
 var util = require("../util");
+
+
 var complexityService = require("../service/complexityService");
 var finedustService = require("../service/finedustService");
 
 // direct request
 router.get("/", function (req, res) {
-  res.render("maps/index");
+ // 여기서 해당 station name 매개변수로 저장할 수도 ?
+  res.render("maps/index",{
+    subway_name : req.param('subway_name')
+  });
 });
 
 //serch
@@ -30,9 +35,9 @@ module.exports = router;
 
 // private functions
 function checkPermission(req, res, next) {
-  Post.findOne({ numId: req.params.id }, function (err, post) {
+  Usage.findOne({ numId: req.params.id }, function (err, usage) {
     if (err) return res.json(err);
-    if (post.author != req.user.id) return util.noPermission(req, res);
+    if (usage.author != req.user.id) return util.noPermission(req, res);
 
     next();
   });

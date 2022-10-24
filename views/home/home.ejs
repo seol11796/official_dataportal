@@ -28,12 +28,13 @@
       <div class="container-fluid">
         <a class="navbar-brand" href="/">지하철 날씨</a>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <form class="d-flex">
+          <form class="d-flex" method="get" action="/map">
             <input
               class="form-control me-2"
               type="search"
               placeholder="Search"
               aria-label="Search"
+              name ="subway_name"
             />
             <button class="btn btn-outline-success" type="submit">Search</button>
           </form>
@@ -65,7 +66,7 @@
         
       <div style="width:200px; height:150px; float:left "><h3>알고싶은 지하철 역을 검색하시오.</h3></div>
       <div style="width:200px; height:150px; float:left;">
-        <img src="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/c9c1308a-4fd5-402e-a4a0-e26a2f9b80a6/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20221022%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221022T100007Z&X-Amz-Expires=86400&X-Amz-Signature=ccb159ea75c7ce8e41d3bd7cee56b52843623dd0dd126f360f588e76190e0b29&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject">
+        <img src="https://subweatherimages.s3.ap-northeast-2.amazonaws.com/map.jpg">
         </div>
          
               
