@@ -29,6 +29,9 @@ app.use(methodOverride("_method"));
 app.use(flash());
 app.use(session({ secret: "MySecret", resave: true, saveUninitialized: true }));
 
+
+
+
 // Passport
 app.use(passport.initialize());
 app.use(passport.session());
@@ -43,8 +46,8 @@ app.use(function (req, res, next) {
 
 // Routes
 app.use("/", require("./routes/home"));
-app.use("/map", util.getPostQueryString, require("./routes/map"));
-app.use("/station", util.getPostQueryString, require("./routes/station"));
+app.use("/map", util.getPostQueryString, require("./routes/station"));
+app.use("/station", util.getPostQueryString, require("./routes/map"));
 
 // Port setting
 var port = 3000;
