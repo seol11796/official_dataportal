@@ -2,10 +2,12 @@ var express = require("express");
 var router = express.Router();
 var multer = require("multer");
 var upload = multer({ dest: "uploadedFiles/" });
-var Post = require("../models/Post");
+var Usage = require("../models/Usage");
 var User = require("../models/User");
 var File = require("../models/File");
 var util = require("../util");
+
+
 var complexityService = require("../service/complexityService");
 var finedustService = require("../service/finedustService");
 
@@ -46,9 +48,9 @@ module.exports = router;
 
 // private functions
 function checkPermission(req, res, next) {
-  Post.findOne({ numId: req.params.id }, function (err, post) {
+  Usage.findOne({ numId: req.params.id }, function (err, usage) {
     if (err) return res.json(err);
-    if (post.author != req.user.id) return util.noPermission(req, res);
+    if (usage.author != req.user.id) return util.noPermission(req, res);
 
     next();
   });
