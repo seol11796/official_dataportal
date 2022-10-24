@@ -9,11 +9,11 @@ var util = require("../util");
 
 // get station information
 router.get("/", async function (req, res) {
-  complex = await complexityService.getComplexity(req.params.stationName);
-  finedust = await finedustService.getFinedust(req.params.stationName);
+  complex = await complexityService.getComplexity(req.query.subway_name);
+  finedust = await finedustService.getFinedust(req.query.subway_name);
 
   res.render("stations/about", {
-    station_name: req.params.stationName,
+    station_name: req.query.subway_name,
     station_number: null,
     complexity_state: null,
     dust_state: null,
