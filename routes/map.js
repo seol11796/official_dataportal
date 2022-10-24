@@ -7,112 +7,29 @@ var User = require("../models/User");
 var File = require("../models/File");
 var util = require("../util");
 
-// get station information
-router.get("/:stationName", async function (req, res) {
-  complexityService.getComplexity(req.params.stationName);
-  finedustService.getFinedust(req.params.stationName);
 
+var complexityService = require("../service/complexityService");
+var finedustService = require("../service/finedustService");
 
-
-  res.render("maps/index", {
-  //// 서비스에서 처리해서 라우트에서 넘겨준 것 여기서 보여주기 
-    station_name:station_name,
-    station_number:station_number, // ex) 2호선, 2 
-  
-    
-    // *가장 혼잡한 시간* 
-    // 상선
-    geton_maxcpx : geton_maxcpx,
-    getoff_maxcpx : getoff_maxcpx, 
-    // 가장 한가한 시간
-    // 하선
-    geton_mincpx : geton_maxcpx,
-    getoff_mincpx : getoff_mincpx,
-
-    // *공기질*
-    // 실제수치 
-    pm : pm ,
-
-    // *편의시설*
-    // 물품보관함
-    locker_location: locker_location ,
-    // 주변 건물 
-    nearby_building : nearby_building ,
-
-    // S3를 통해 불러온 해당 지하철 역 이미지 
-    subway_image : subway_image 
-
-
-  
+// direct request
+router.get("/", function (req, res) {
+ // 여기서 해당 station name 매개변수로 저장할 수도 ?
+  res.render("maps/index",{
+    subway_name : req.param('subway_name')
   });
 
+});
 
+//serch
+router.get("/:stationName", async function (req, res) {
+  complex = await complexityService.getComplexity(req.params.stationName);
+  finedust = await finedustService.getFinedust(req.params.stationName);
+  res.render("maps/index");
+});
 
-
-  // 이전 코드 
-  var page = Math.max(1, parseInt(req.query.page));
-  var limit = Math.max(1, parseInt(req.query.limit));
-  page = !isNaN(page) ? page : 1;
-  limit = !isNaN(limit) ? limit : 10;
-
-  var skip = (page - 1) * limit;
-  var maxPage = 0;
-  var searchQuery = await createSearchQuery(req.query);
-  var usage = [];
-
-  if (searchQuery) {
-    var count = await Usage.countDocuments(searchQuery);
-    maxPage = Math.ceil(count / limit);
-    usage = await Usage.aggregate([
-      { $match: searchQuery },
-      {
-        $lookup: {
-          from: "users",
-          localField: "author",
-          foreignField: "_id",
-          as: "author",
-        },
-      },
-      { $unwind: "$author" },
-      { $sort: { createdAt: -1 } },
-      { $skip: skip },
-      { $limit: limit },
-
-      {
-        $lookup: {
-          from: "files",
-          localField: "attachment",
-          foreignField: "_id",
-          as: "attachment",
-        },
-      },
-      {
-        $unwind: {
-          path: "$attachment",
-          preserveNullAndEmptyArrays: true,
-        },
-      },
-      {
-        $project: {
-          title: 1,
-          author: {
-            username: 1,
-          },
-          views: 1,
-          numId: 1,
-          attachment: {
-            $cond: [
-              { $and: ["$attachment", { $not: "$attachment.isDeleted" }] },
-              true,
-              false,
-            ],
-          },
-          createdAt: 1,
-        },
-      },
-    ]).exec();
-  }
-
+// showing route
+router.get("/:startStationName/:endStaionName", function (req, res) {
+  res.render("maps/index");
 
 });
 
