@@ -1,4 +1,5 @@
 var api_config = require("../config/finedustApiConfig.json");
+var stationNumbering = require("../config/finedustStationNumber.json");
 var request = require("request");
 
 async function getFinedust(stationName) {
@@ -11,8 +12,14 @@ async function getFinedust(stationName) {
 }
 
 function getStationNumber(stationName) {
-  stationNumber = stationName;
-  return 3;
+  for (var i = 1; i < 9; i++) {
+    var checkStation =
+      stationNumbering[i.toString()].hasOwnProperty(stationName);
+    if (checkStation) {
+      return stationNumbering[i.toString()][stationName];
+    }
+  }
+  return -1;
 }
 
 function finedustRequireURLResolver(key, stationName) {

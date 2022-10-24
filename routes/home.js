@@ -5,9 +5,7 @@ var url = require('url');
 
 // Home
 router.get("/", function (req, res) {
- res.render("home/home");
-var data = req.params.subway_name;
-
+  res.render("home/home");
 });
 
 
