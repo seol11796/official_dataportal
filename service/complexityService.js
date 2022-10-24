@@ -30,7 +30,7 @@ async function getComplexity(stationName) {
   return keys;
 }
 
-function getJSON(url) {
+function getJSON(url) { 
   return new Promise(function (resolve, reject) {
     request(url, function (err, res, body) {
       if (!err && res.statusCode == 200) {

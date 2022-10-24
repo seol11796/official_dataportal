@@ -18,7 +18,7 @@ router.get("/", function (req, res) {
 router.get("/:stationName", async function (req, res) {
   complex = await complexityService.getComplexity(req.params.stationName);
   finedust = await finedustService.getFinedust(req.params.stationName);
-  res.render("maps/index");
+  res.render("stations/index");
 });
 
 // showing route
