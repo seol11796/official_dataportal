@@ -14,9 +14,6 @@ router.get("/", async function (req, res) {
   complex = await complexityService.getComplexity(req.query.subway_name);
   finedust = await finedustService.getFinedust(req.query.subway_name);
 
-  console.log(complex);
-  console.log(finedust);
-
   res.render("maps/index", {
     station_name: req.query.subway_name,
     line_number: null,

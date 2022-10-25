@@ -15,7 +15,7 @@ router.get("/", async function (req, res) {
   res.render("stations/about", {
     station_name: req.query.subway_name,
     station_number: null,
-    complexity_state: null,
+    complexity_state: complex.complexity_state,
     dust_state: finedust.dust_state,
     locker_location: null,
     nearby_building: null,
