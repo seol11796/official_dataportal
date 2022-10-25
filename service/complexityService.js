@@ -3,14 +3,23 @@ var stationNumbering = require("../config/complexityStationNumber.json");
 var request = require("request");
 
 async function getComplexity(stationName) {
+  var ret = new Object();
+
   const authKey = api_config.Encoding;
   var now = new Date();
   var dayOfWeek = now.getDay();
+  var hours = now.getHours();
+  var minutes = now.getMinutes();
+
+  if (minutes < 30) minutes = "00분";
+  else minutes = "30분";
+
+  var queryTime = hours + "시" + minutes;
 
   var requesturl = complexRequireURLResolver(authKey, stationName, dayOfWeek);
   var res_json = JSON.parse(await getJSON(requesturl));
-  var keys = [0, 0, 0, 0];
   // 상행 여유, 상행 혼잡, 하행 여유, 하행 혼잡
+  var keys = [0, 0, 0, 0];
   var values = [100.0, 0.0, 100.0, 0.0];
 
   for (var loop = 0; loop < 2; loop++) {
@@ -29,7 +38,22 @@ async function getComplexity(stationName) {
       values[1 + loop * 2] = Math.max(value, values[1 + loop * 2]);
     }
   }
-  return keys;
+
+  for (var i = 0; i < 4; i++) {
+    if (keys[i].length == 6 && keys[i].substr(0, 2) > "12") {
+      keys[i] = "오후 " + (keys[i].substr(0, 2) * 1 - 12) + keys[i].substr(2);
+    } else {
+      keys[i] = "오전 " + keys[i];
+    }
+  }
+  console.log(queryTime);
+  var mean = res_json.data[0][Object.keys(queryTime)[0]];
+  console.log(mean);
+
+  ret.complexTime = keys;
+  ret.complexity_state = 0;
+
+  return ret;
 }
 
 function getJSON(url) {
