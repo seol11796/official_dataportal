@@ -63,7 +63,7 @@
                   <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                       <li class="nav-item">
 
-                             <span class="ms-1 d-none d-sm-inline"><h4><%= subwway_name %>역</h2></span>
+                             <span class="ms-1 d-none d-sm-inline"><h4><%= station_name %>역</h2></span>
 
                       </li>
                       <li><hr></hr></li>
@@ -112,7 +112,7 @@
 
                          <br>
                          <li>
-                           <span class="ms-1 d-none d-sm-inline"> 현재 건대입구역의 Pmq는 </span>
+                           <span class="ms-1 d-none d-sm-inline"> 현재 <%= station_name %>의 Pmq는 </span>
                            <br> 
 
                             <span><%= pm %>㎍/㎥는 입니다.</span>  
@@ -154,7 +154,7 @@
                   name="<%= subway_name %>"/>                  
                   <button type="submit" class="location_button" type="submit" onclick="location.href='/station?station_name=<%= subway_name %>'">
                     <h2 class="location_icon">
-                      👇<%= subway_name %>
+                      👇<%= station_name %>
                    
                     </h2>
                   </button>
