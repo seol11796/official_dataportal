@@ -46,12 +46,14 @@ async function getComplexity(stationName) {
       keys[i] = "오전 " + keys[i];
     }
   }
-  console.log(queryTime);
-  var mean = res_json.data[0][Object.keys(queryTime)[0]];
-  console.log(mean);
+
+  var mean =
+    (res_json.data[0][queryTime] * 1 + res_json.data[1][queryTime] * 1) / 2;
 
   ret.complexTime = keys;
-  ret.complexity_state = 0;
+  if (mean < 33.0) ret.complexity_state = "쾌적";
+  else if (mean < 66.0) ret.complexity_state = "보통";
+  else ret.complexity_state = "나쁨";
 
   return ret;
 }
