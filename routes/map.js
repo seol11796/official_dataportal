@@ -8,14 +8,17 @@ var File = require("../models/File");
 var util = require("../util");
 var complexityService = require("../service/complexityService");
 var finedustService = require("../service/finedustService");
+var subwayNameService = require("../service/subwayNameService")
 
 router.get("/", async function (req, res) {
-  complex = await complexityService.getComplexity(req.query.subway_name);
-  finedust = await finedustService.getFinedust(req.query.subway_name);
+  tmp_stationName = req.query.subway_name;
+  search_stationName = subwayNameService.getStationName(tmp_stationName)
+  complex = await complexityService.getComplexity(search_stationName);
+  finedust = await finedustService.getFinedust(search_stationName);
 
   res.render("maps/index", {
     //"건대입구역" 등 '역'까지 포함한 형태
-    station_name: req.query.subway_name,
+    station_name: search_stationName,
     //숫자 하나 혹은 "x호선"으로 아직 결정 못함
     line_number: null,
     // "오후 12시30분", "오전 9시00분" 등의 30분 단위. 시간의 경우 십의 자리 0 채움이 없음
@@ -38,6 +41,7 @@ router.get("/", async function (req, res) {
 router.get("/:stationName", async function (req, res) {
   complex = await complexityService.getComplexity(req.params.stationName);
   finedust = await finedustService.getFinedust(req.params.stationName);
+
   res.render("maps/index");
 });
 

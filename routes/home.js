@@ -11,9 +11,6 @@ router.get("/", function (req, res) {
 });
 
 
-//
-
-
 // Login
 router.get("/login", function (req, res) {
   var username = req.flash("username")[0];
