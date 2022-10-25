@@ -23,8 +23,8 @@ async function createS3Bucket(){
         secret_key,
         region,
         credentials: {
-            accessKeyId : AKIAUMX2QPW4BDMTWTPH,
-            secretAccessKey: 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
+            accessKeyId : access_key,
+            secretAccessKey: secret_key
         }
     });
     
