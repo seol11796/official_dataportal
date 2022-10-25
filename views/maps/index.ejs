@@ -13,15 +13,18 @@
       }
      
       .backgroud_image{
+
         height: 470px;
         width: 700px;
         background-image: url("https://s3.us-west-2.amazonaws.com/secure.notion-static.com/c9c1308a-4fd5-402e-a4a0-e26a2f9b80a6/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20221024%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221024T110544Z&X-Amz-Expires=86400&X-Amz-Signature=45e583faf7b5d643eeaca5209d6ae28b3d8be392c7749b3e37ad687aa6d0b407&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject");
         margin-left:150px;
         margin-top : 90px;
+
       }
       
       .d-flex{
         width: 350px;
+
         background-color: aliceblue;
       }
 
@@ -39,45 +42,17 @@
           
       }
     
+      
+      }
+
      
      </style>
    
   </head>
   <body>
   
-    <div class="container-fluid">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-         
-          <a class="navbar-brand" href="/">지하철 날씨  <p><%= subway_name %></p></a>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <form class="d-flex">
-              <input
-                class="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-          </div>
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <% if(isAuthenticated){ %>
-            <li class="nav-item">
-              <a href="/users/<%= currentUser.username %>" class="nav-link"
-                >My Account</a
-              >
-            </li>
-            <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
-            <% } else { %>
-            <li class="nav-item">
-              <a href="/users/new" class="nav-link">Sign Up</a>
-            </li>
-            <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
-            <% } %>
-          </ul>
-        </div>
-      </nav>
+
+    <%- include('../partials/nav') %>
 
       <div class="row flex-nowrap">
           <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-light">
@@ -87,7 +62,9 @@
                   </a>
                   <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                       <li class="nav-item">
+
                              <span class="ms-1 d-none d-sm-inline"><h4><%= subwway_name %>역</h2></span>
+
                       </li>
                       <li><hr></hr></li>
                       <li>
@@ -99,10 +76,12 @@
                          </li>
                          
                          <li>
+
                           <span class="ms-1 d-none d-sm-inline">상선 <%= geton_maxcpx %></span> 
                            </li>
                            <li>
                             <span class="ms-1 d-none d-sm-inline">하선 <%= getoff_maxcpx %></span> 
+
                              </li>
                              
                               <br>
@@ -110,10 +89,12 @@
                               <span class="ms-1 d-none d-sm-inline">가장 한가한 시간</span> 
                                </li>
                              <li>
+
                               <span class="ms-1 d-none d-sm-inline">상선 <%= geton_mincpx %></span> 
                                </li>
                                <li>
                                 <span class="ms-1 d-none d-sm-inline">하선 <%= getoff_mincpx %></span> 
+
                                  </li>
                               <br><br>
                                </li>
@@ -124,18 +105,26 @@
                        
                                 <li>
                                   <span class="ms-1 d-none d-sm-inline">공기질</span> 
+
                          </li> 
+
+                        
+
                          <br>
                          <li>
                            <span class="ms-1 d-none d-sm-inline"> 현재 건대입구역의 Pmq는 </span>
                            <br> 
+
                             <span><%= pm %>㎍/㎥는 입니다.</span>  
                           </li>
                             
-                            <li>
-                             <span class="ms-1 d-none d-sm-inline">상대적으로 "<%= %>"에</span> 
-                              </li>
-                              
+                           
+                    
+          
+                         
+                            
+                          
+                             
                                  <br>
                                  <br>
                                  <li><hr></hr></li>
@@ -157,6 +146,7 @@
                 </div>
                   
                 </div>
+
                 <div class="backgroud_image">
                   <!--<form method="get" action="/station">-->
                   <input
@@ -170,6 +160,7 @@
                   </button>
                   </form>
                 </div> 
+
               </div>  
 
                 <div class="col py-3">

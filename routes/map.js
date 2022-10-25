@@ -11,11 +11,32 @@ var util = require("../util");
 var complexityService = require("../service/complexityService");
 var finedustService = require("../service/finedustService");
 
-// direct request
-router.get("/", function (req, res) {
- // 여기서 해당 station name 매개변수로 저장할 수도 ?
-  res.render("maps/index",{
-    subway_name : req.query.subway_name
+
+router.get("/", async function (req, res) {
+  console.log(req.query.subway_name);
+  complex = await complexityService.getComplexity(req.query.subway_name);
+  finedust = await finedustService.getFinedust(req.query.subway_name);
+
+  console.log(complex);
+
+  res.render("maps/index", {
+    //"건대입구역" 등 '역'까지 포함한 형태
+    station_name: req.query.subway_name,
+    //숫자 하나 혹은 "x호선"으로 아직 결정 못함
+    line_number: null,
+    // "오후 12시30분", "오전 9시00분" 등의 30분 단위. 시간의 경우 십의 자리 0 채움이 없음
+    geton_mincpx: complex[0],
+    geton_maxcpx: complex[1],
+    getoff_mincpx: complex[2],
+    getoff_maxcpx: complex[3],
+    //PMq값을 뺀 x.x 숫자
+    pm: null,
+    //미정
+    locker_location: null,
+    //미정
+    nearby_building: null,
+    //바로 접속 가능한 링크
+    subway_image: null,
   });
 
 });

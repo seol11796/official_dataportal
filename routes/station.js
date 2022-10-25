@@ -20,15 +20,26 @@ router.get("/",function(req,res){
 
 
 // get station information
-router.get("/:stationName", async function (req, res) {
-  complexityService.getComplexity(req.params.stationName);
-  finedustService.getFinedust(req.params.stationName);
 
-  res.render("stations/about",
-  {
-    subway_name: req.param('subway_name')
-  }
-  );
+router.get("/", async function (req, res) {
+  complex = await complexityService.getComplexity(req.query.subway_name);
+  finedust = await finedustService.getFinedust(req.query.subway_name);
+
+  res.render("stations/about", {
+    //"건대입구역" 등 '역'까지 포함한 형태
+    station_name: req.query.subway_name,
+    //숫자 하나 혹은 "x호선"으로 아직 결정 못함
+    station_number: null,
+    //쾌적, 적당, 복잡 중 하나
+    complexity_state: null,
+    //좋음, 보통, 나쁨 중 하나
+    dust_state: null,
+    //미정
+    locker_location: null,
+    //미정
+    nearby_building: null,
+  });
+
 });
 
 

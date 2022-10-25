@@ -67,39 +67,10 @@
     <%- include('../partials/head') %>
   </head>
   <body>
-   <div class="full_screen">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="/">지하철 날씨</a>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <form class="d-flex" method="get" action="/map">
-            <input
-              class="form-control me-2"
-              type="search"
-              placeholder="Search"
-              aria-label="Search"
-              name ="subway_name"
-            />
-            <button class="btn btn-outline-success" type="submit">Search</button>
-          </form>
-        </div>
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <% if(isAuthenticated){ %>
-          <li class="nav-item">
-            <a href="/users/<%= currentUser.username %>" class="nav-link"
-              >My Account</a
-            >
-          </li>
-          <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
-          <% } else { %>
-          <li class="nav-item">
-            <a href="/users/new" class="nav-link">Sign Up</a>
-          </li>
-          <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
-          <% } %>
-        </ul>
-      </div>
-    </nav>
+
+    <%- include('../partials/nav') %>
+
+
     <div class="container mb-3">
 
       <div class="container px-4 py-5" id="icon-grid">
