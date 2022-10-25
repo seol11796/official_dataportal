@@ -24,7 +24,6 @@
         width: 350px;
         background-color: aliceblue;
       }
-
       .location_button {
           margin-left: 150px;
           margin-top: 150px;
@@ -39,45 +38,16 @@
           
       }
     
+      
+      }
      
      </style>
    
   </head>
   <body>
   
-    <div class="container-fluid">
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-         
-          <a class="navbar-brand" href="/">지하철 날씨  <p><%= subway_name %></p></a>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <form class="d-flex">
-              <input
-                class="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button class="btn btn-outline-success" type="submit">Search</button>
-            </form>
-          </div>
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <% if(isAuthenticated){ %>
-            <li class="nav-item">
-              <a href="/users/<%= currentUser.username %>" class="nav-link"
-                >My Account</a
-              >
-            </li>
-            <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
-            <% } else { %>
-            <li class="nav-item">
-              <a href="/users/new" class="nav-link">Sign Up</a>
-            </li>
-            <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
-            <% } %>
-          </ul>
-        </div>
-      </nav>
+
+    <%- include('../partials/nav') %>
 
       <div class="row flex-nowrap">
           <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-light">
@@ -87,7 +57,9 @@
                   </a>
                   <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                       <li class="nav-item">
+
                              <span class="ms-1 d-none d-sm-inline"><h4><%= subwway_name %>역</h2></span>
+
                       </li>
                       <li><hr></hr></li>
                       <li>
@@ -99,10 +71,12 @@
                          </li>
                          
                          <li>
+
                           <span class="ms-1 d-none d-sm-inline">상선 <%= geton_maxcpx %></span> 
                            </li>
                            <li>
                             <span class="ms-1 d-none d-sm-inline">하선 <%= getoff_maxcpx %></span> 
+
                              </li>
                              
                               <br>
@@ -110,10 +84,12 @@
                               <span class="ms-1 d-none d-sm-inline">가장 한가한 시간</span> 
                                </li>
                              <li>
+
                               <span class="ms-1 d-none d-sm-inline">상선 <%= geton_mincpx %></span> 
                                </li>
                                <li>
                                 <span class="ms-1 d-none d-sm-inline">하선 <%= getoff_mincpx %></span> 
+
                                  </li>
                               <br><br>
                                </li>
@@ -124,18 +100,26 @@
                        
                                 <li>
                                   <span class="ms-1 d-none d-sm-inline">공기질</span> 
+
                          </li> 
+
+                        
+
                          <br>
                          <li>
                            <span class="ms-1 d-none d-sm-inline"> 현재 건대입구역의 Pmq는 </span>
                            <br> 
+
                             <span><%= pm %>㎍/㎥는 입니다.</span>  
                           </li>
                             
-                            <li>
-                             <span class="ms-1 d-none d-sm-inline">상대적으로 "<%= %>"에</span> 
-                              </li>
-                              
+                           
+                    
+          
+                         
+                            
+                          
+                             
                                  <br>
                                  <br>
                                  <li><hr></hr></li>
@@ -157,6 +141,7 @@
                 </div>
                   
                 </div>
+
                 <div class="backgroud_image">
                   <!--<form method="get" action="/station">-->
                   <input
@@ -170,6 +155,7 @@
                   </button>
                   </form>
                 </div> 
+
               </div>  
 
                 <div class="col py-3">

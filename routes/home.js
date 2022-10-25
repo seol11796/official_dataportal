@@ -5,8 +5,8 @@ var url = require('url');
 
 // Home
 router.get("/", function (req, res) {
- res.render("home/home");
-var data = req.params.subway_name;
+
+  res.render("home/home");
 
 });
 
@@ -67,5 +67,6 @@ router.get("/logout", function (req, res) {
 router.get("/mypage", function (req, res) {
   res.render("home/mypage");
 });
+
 
 module.exports = router;
