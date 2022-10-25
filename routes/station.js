@@ -6,6 +6,8 @@ var Usage = require("../models/Usage");
 var User = require("../models/User");
 var File = require("../models/File");
 var util = require("../util");
+var complexityService = require("../service/complexityService");
+var finedustService = require("../service/finedustService");
 
 // get station information
 router.get("/", async function (req, res) {
@@ -13,11 +15,17 @@ router.get("/", async function (req, res) {
   finedust = await finedustService.getFinedust(req.query.subway_name);
 
   res.render("stations/about", {
+    //"건대입구역" 등 '역'까지 포함한 형태
     station_name: req.query.subway_name,
-    station_number: null,
+    //숫자 하나 혹은 "x호선"으로 아직 결정 못함
+    line_number: null,
+    //쾌적, 적당, 복잡 중 하나
     complexity_state: complex.complexity_state,
+    //좋음, 보통, 나쁨 중 하나
     dust_state: finedust.dust_state,
+    //미정
     locker_location: null,
+    //미정
     nearby_building: null,
   });
 });

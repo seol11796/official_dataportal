@@ -6,7 +6,6 @@ var Usage = require("../models/Usage");
 var User = require("../models/User");
 var File = require("../models/File");
 var util = require("../util");
-
 var complexityService = require("../service/complexityService");
 var finedustService = require("../service/finedustService");
 
@@ -15,15 +14,22 @@ router.get("/", async function (req, res) {
   finedust = await finedustService.getFinedust(req.query.subway_name);
 
   res.render("maps/index", {
+    //"건대입구역" 등 '역'까지 포함한 형태
     station_name: req.query.subway_name,
+    //숫자 하나 혹은 "x호선"으로 아직 결정 못함
     line_number: null,
+    // "오후 12시30분", "오전 9시00분" 등의 30분 단위. 시간의 경우 십의 자리 0 채움이 없음
     geton_mincpx: complex.complexTime[0],
     geton_maxcpx: complex.complexTime[1],
     getoff_mincpx: complex.complexTime[2],
     getoff_maxcpx: complex.complexTime[3],
+    //PMq값을 뺀 x.x 숫자
     pm: finedust.PMq,
+    //미정
     locker_location: null,
+    //미정
     nearby_building: null,
+    //바로 접속 가능한 링크
     subway_image: null,
   });
 });
