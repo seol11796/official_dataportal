@@ -6,18 +6,12 @@ var Usage = require("../models/Usage");
 var User = require("../models/User");
 var File = require("../models/File");
 var util = require("../util");
-
-
 var complexityService = require("../service/complexityService");
 var finedustService = require("../service/finedustService");
 
-
 router.get("/", async function (req, res) {
-  console.log(req.query.subway_name);
   complex = await complexityService.getComplexity(req.query.subway_name);
   finedust = await finedustService.getFinedust(req.query.subway_name);
-
-  console.log(complex);
 
   res.render("maps/index", {
     //"건대입구역" 등 '역'까지 포함한 형태
@@ -38,7 +32,6 @@ router.get("/", async function (req, res) {
     //바로 접속 가능한 링크
     subway_image: null,
   });
-
 });
 
 //serch
@@ -51,7 +44,6 @@ router.get("/:stationName", async function (req, res) {
 // showing route
 router.get("/:startStationName/:endStaionName", function (req, res) {
   res.render("maps/index");
-
 });
 
 module.exports = router;
