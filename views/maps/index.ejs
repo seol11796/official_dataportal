@@ -13,17 +13,20 @@
       }
      
       .backgroud_image{
+
         height: 470px;
         width: 700px;
         background-image: url("https://s3.us-west-2.amazonaws.com/secure.notion-static.com/c9c1308a-4fd5-402e-a4a0-e26a2f9b80a6/Untitled.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20221024%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20221024T110544Z&X-Amz-Expires=86400&X-Amz-Signature=45e583faf7b5d643eeaca5209d6ae28b3d8be392c7749b3e37ad687aa6d0b407&X-Amz-SignedHeaders=host&response-content-disposition=filename%20%3D%22Untitled.png%22&x-id=GetObject");
         margin-left:150px;
         margin-top : 90px;
+
       }
       
       .d-flex{
         width: 350px;
         background-color: aliceblue;
       }
+
       .location_button {
           margin-left: 150px;
           margin-top: 150px;
@@ -39,7 +42,7 @@
       }
     
       
-      }
+
      
      </style>
    
@@ -58,7 +61,7 @@
                   <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                       <li class="nav-item">
 
-                             <span class="ms-1 d-none d-sm-inline"><h4><%= subwway_name %>역</h2></span>
+                        <span class="ms-1 d-none d-sm-inline"><h4><%= station_name %>역</h2></span>
 
                       </li>
                       <li><hr></hr></li>
@@ -107,7 +110,7 @@
 
                          <br>
                          <li>
-                           <span class="ms-1 d-none d-sm-inline"> 현재 건대입구역의 Pmq는 </span>
+                           <span class="ms-1 d-none d-sm-inline"> 현재 <%= station_name %>의 Pmq는 </span>
                            <br> 
 
                             <span><%= pm %>㎍/㎥는 입니다.</span>  
@@ -146,10 +149,10 @@
                   <!--<form method="get" action="/station">-->
                   <input
                   type="button"
-                  name="<%= subway_name %>"/>                  
-                  <button type="submit" class="location_button" type="submit" onclick="location.href='/station?station_name=<%= subway_name %>'">
+                  name="<%= station_name %>"/>                  
+                  <button type="submit" class="location_button" type="submit" onclick="location.href='/station?station_name=<%= station_name %>'">
                     <h2 class="location_icon">
-                      👇<%= subway_name %>
+                      👇<%= station_name %>
                    
                     </h2>
                   </button>

@@ -14,10 +14,10 @@
    
     
     </style>
-    <%- include('../partials/head') %>
+    <%= include('../partials/head') %>
   </head>
   <body>
-    <%- include('../partials/nav') %>
+    <%= include('../partials/nav') %>
 
     <div class="container mb-3">
 
@@ -26,12 +26,18 @@
 
         <h2 class="pb-2 border-bottom"><%= station_name %>역</h2>
         <p><%= line_number %>호선</p>
-        <h4><%= ></h4>
+       
+
+
+
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5">
           <div class="col d-flex align-items-start">
             <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#home"/></svg>
             <div>
               <h4 class="fw-bold mb-0"></h4>
+
+
+
               <p>현재 건대입구역의 미세먼지 정도는 <%= dust_state %>이에요.</p>
 
             </div>
