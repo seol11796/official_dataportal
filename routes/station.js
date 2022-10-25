@@ -7,7 +7,20 @@ var User = require("../models/User");
 var File = require("../models/File");
 var util = require("../util");
 
+
+
+router.get("/",function(req,res){
+  res.render("stations/about",{
+    subway_name : req.param('subway_name')
+  }
+
+);
+})
+
+
+
 // get station information
+
 router.get("/", async function (req, res) {
   complex = await complexityService.getComplexity(req.query.subway_name);
   finedust = await finedustService.getFinedust(req.query.subway_name);
@@ -26,7 +39,9 @@ router.get("/", async function (req, res) {
     //미정
     nearby_building: null,
   });
+
 });
+
 
 module.exports = router;
 

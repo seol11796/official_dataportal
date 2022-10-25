@@ -1,9 +1,11 @@
+
 var api_config = require("../config/complexityApiConfig.json");
 var stationNumbering = require("../config/complexityStationNumber.json");
 var request = require("request");
 
 async function getComplexity(stationName) {
   const authKey = api_config.Encoding;
+
   var now = new Date();
   var dayOfWeek = now.getDay();
 
@@ -31,6 +33,7 @@ async function getComplexity(stationName) {
   }
   return keys;
 }
+
 
 function getJSON(url) {
   return new Promise(function (resolve, reject) {

@@ -5,7 +5,9 @@ var url = require('url');
 
 // Home
 router.get("/", function (req, res) {
+
   res.render("home/home");
+
 });
 
 
@@ -66,4 +68,6 @@ router.get("/mypage", function (req, res) {
   res.render("home/mypage");
 });
 
+
 module.exports = router;
+
