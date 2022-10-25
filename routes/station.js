@@ -16,7 +16,7 @@ router.get("/", async function (req, res) {
     station_name: req.query.subway_name,
     station_number: null,
     complexity_state: null,
-    dust_state: null,
+    dust_state: finedust.dust_state,
     locker_location: null,
     nearby_building: null,
   });
