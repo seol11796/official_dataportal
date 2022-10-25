@@ -19,6 +19,11 @@ async function getFinedust(stationName) {
   ret.PMq = res_json["airPolutionInfo"]["row"]["PMq"];
   ret.checkDate = res_json["airPolutionInfo"]["row"]["CHECKDATE"];
 
+  var pmq = ret.PMq * 1;
+  if (pmq < 15) ret.dust_state = "좋음";
+  else if (pmq < 35) ret.dust_state = "보통";
+  else ret.dust_state = "나쁨";
+
   return ret;
 }
 

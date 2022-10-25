@@ -19,12 +19,12 @@ router.get("/", async function (req, res) {
     //숫자 하나 혹은 "x호선"으로 아직 결정 못함
     line_number: null,
     // "오후 12시30분", "오전 9시00분" 등의 30분 단위. 시간의 경우 십의 자리 0 채움이 없음
-    geton_mincpx: complex[0],
-    geton_maxcpx: complex[1],
-    getoff_mincpx: complex[2],
-    getoff_maxcpx: complex[3],
+    geton_mincpx: complex.complexTime[0],
+    geton_maxcpx: complex.complexTime[1],
+    getoff_mincpx: complex.complexTime[2],
+    getoff_maxcpx: complex.complexTime[3],
     //PMq값을 뺀 x.x 숫자
-    pm: null,
+    pm: finedust.PMq,
     //미정
     locker_location: null,
     //미정

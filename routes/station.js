@@ -20,9 +20,9 @@ router.get("/", async function (req, res) {
     //숫자 하나 혹은 "x호선"으로 아직 결정 못함
     line_number: null,
     //쾌적, 적당, 복잡 중 하나
-    complexity_state: null,
+    complexity_state: complex.complexity_state,
     //좋음, 보통, 나쁨 중 하나
-    dust_state: null,
+    dust_state: finedust.dust_state,
     //미정
     locker_location: null,
     //미정
