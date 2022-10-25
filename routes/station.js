@@ -6,21 +6,10 @@ var Usage = require("../models/Usage");
 var User = require("../models/User");
 var File = require("../models/File");
 var util = require("../util");
-
-
-
-router.get("/",function(req,res){
-  res.render("stations/about",{
-    subway_name : req.param('subway_name')
-  }
-
-);
-})
-
-
+var complexityService = require("../service/complexityService");
+var finedustService = require("../service/finedustService");
 
 // get station information
-
 router.get("/", async function (req, res) {
   complex = await complexityService.getComplexity(req.query.subway_name);
   finedust = await finedustService.getFinedust(req.query.subway_name);
@@ -29,7 +18,7 @@ router.get("/", async function (req, res) {
     //"건대입구역" 등 '역'까지 포함한 형태
     station_name: req.query.subway_name,
     //숫자 하나 혹은 "x호선"으로 아직 결정 못함
-    station_number: null,
+    line_number: null,
     //쾌적, 적당, 복잡 중 하나
     complexity_state: null,
     //좋음, 보통, 나쁨 중 하나
@@ -39,9 +28,7 @@ router.get("/", async function (req, res) {
     //미정
     nearby_building: null,
   });
-
 });
-
 
 module.exports = router;
 
