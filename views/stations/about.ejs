@@ -25,23 +25,23 @@
 
       <div class="container px-4 py-5" id="icon-grid">
 
-        <h2 class="pb-2 border-bottom">건대입구역</h2>
-        <p></p>
-        <h4>2호선</h4>
+        <h2 class="pb-2 border-bottom"><%= station_name %>역</h2>
+        <p><%= line_number %>호선</p>
+        <h4><%= ></h4>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5">
           <div class="col d-flex align-items-start">
             <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#home"/></svg>
             <div>
               <h4 class="fw-bold mb-0"></h4>
-              <p>현재 건대입구역의 미세먼지 정도는 나쁨이에요.</p>
+              <p>현재 건대입구역의 미세먼지 정도는 <%= dust_state %>이에요.</p>
             </div>
           </div>
           <div class="col d-flex align-items-start">
             <svg class="bi text-muted flex-shrink-0 me-3" width="1.75em" height="1.75em"><use xlink:href="#bootstrap"/></svg>
             <div>
-              
-              <p>물품 보관함의 위치는 6번 출구 주변, 2번 출구 주변, 5번 출구 주변이에요</p>
-              <p>주변에 뚝섬유원지와 서울 어린이 대공원, 건국대학교가 있어요.</p>
+              <!-- 아직 불러오지 않은 부분 -->
+              <p> 물품 보관함의 위치는 6번 출구 주변, 2번 출구 주변, 5번 출구 주변이에요 </p>
+              <p> 한아름 빌딩이 있습니다.</p>
             </div>
           </div>
           
@@ -50,7 +50,7 @@
             <div>
               <p>
                 <i class="fa-regular fa-face-smile"></i>
-                현재 건대입구역은 "쾌적"해요!</p>
+                현재 <%= station_name %>은 <%= complexity_state %>한 편이에요!</p>
             </div>
        
           </div>

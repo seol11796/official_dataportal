@@ -87,7 +87,7 @@
                   </a>
                   <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                       <li class="nav-item">
-                             <span class="ms-1 d-none d-sm-inline"><h4>건대입구역</h2></span>
+                             <span class="ms-1 d-none d-sm-inline"><h4><%= subwway_name %>역</h2></span>
                       </li>
                       <li><hr></hr></li>
                       <li>
@@ -99,10 +99,10 @@
                          </li>
                          
                          <li>
-                          <span class="ms-1 d-none d-sm-inline">상선 오전 8시 30분</span> 
+                          <span class="ms-1 d-none d-sm-inline">상선 <%= geton_maxcpx %></span> 
                            </li>
                            <li>
-                            <span class="ms-1 d-none d-sm-inline">하선 오전 7시 30분</span> 
+                            <span class="ms-1 d-none d-sm-inline">하선 <%= getoff_maxcpx %></span> 
                              </li>
                              
                               <br>
@@ -110,10 +110,10 @@
                               <span class="ms-1 d-none d-sm-inline">가장 한가한 시간</span> 
                                </li>
                              <li>
-                              <span class="ms-1 d-none d-sm-inline">상선 오전 8시 30분</span> 
+                              <span class="ms-1 d-none d-sm-inline">상선 <%= geton_mincpx %></span> 
                                </li>
                                <li>
-                                <span class="ms-1 d-none d-sm-inline">하선 오전 7시 30분</span> 
+                                <span class="ms-1 d-none d-sm-inline">하선 <%= getoff_mincpx %></span> 
                                  </li>
                               <br><br>
                                </li>
@@ -129,15 +129,13 @@
                          <li>
                            <span class="ms-1 d-none d-sm-inline"> 현재 건대입구역의 Pmq는 </span>
                            <br> 
-                            <span>15㎍/㎥는 입니다.</span>  
+                            <span><%= pm %>㎍/㎥는 입니다.</span>  
                           </li>
                             
                             <li>
-                             <span class="ms-1 d-none d-sm-inline">상대적으로 "나쁨"에</span> 
+                             <span class="ms-1 d-none d-sm-inline">상대적으로 "<%= %>"에</span> 
                               </li>
-                              <li>
-                               <span class="ms-1 d-none d-sm-inline">속합니다.</span> 
-                                </li>
+                              
                                  <br>
                                  <br>
                                  <li><hr></hr></li>
@@ -160,11 +158,11 @@
                   
                 </div>
                 <div class="backgroud_image">
-                  <form method="get" action="/station">
+                  <!--<form method="get" action="/station">-->
                   <input
                   type="button"
                   name="<%= subway_name %>"/>                  
-                  <button type="submit" class="location_button" type="submit">
+                  <button type="submit" class="location_button" type="submit" onclick="location.href='/station?station_name=<%= subway_name %>'">
                     <h2 class="location_icon">
                       👇<%= subway_name %>
                    
