@@ -8,10 +8,12 @@ var File = require("../models/File");
 var util = require("../util");
 var complexityService = require("../service/complexityService");
 var finedustService = require("../service/finedustService");
+var s3Handling = require("../service/s3Handling");
 
 router.get("/", async function (req, res) {
   complex = await complexityService.getComplexity(req.query.subway_name);
   finedust = await finedustService.getFinedust(req.query.subway_name);
+  map_picture_path = await s3Handling.download("건대입구");
 
   res.render("maps/index", {
     //"건대입구역" 등 '역'까지 포함한 형태
@@ -29,8 +31,8 @@ router.get("/", async function (req, res) {
     locker_location: null,
     //미정
     nearby_building: null,
-    //바로 접속 가능한 링크
-    subway_image: null,
+    //index.js 기준 상대 경로
+    subway_image: map_picture_path,
   });
 });
 
