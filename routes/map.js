@@ -26,7 +26,7 @@ router.get("/", async function (req, res) {
   search_stationName = subwayNameService.getStationName(tmp_stationName);
   complex = await complexityService.getComplexity(search_stationName);
   finedust = await finedustService.getFinedust(search_stationName);
-  map_picture_path = await s3Handling.download("건대입구");
+  //map_picture_path = await s3Handling.download("건대입구");
 
   res.render("maps/index", {
     //"건대입구역" 등 '역'까지 포함한 형태
@@ -45,7 +45,7 @@ router.get("/", async function (req, res) {
     //미정
     nearby_building: null,
     //index.js 기준 상대 경로
-    subway_image: map_picture_path,
+    //subway_image: map_picture_path,
   });
 });
 
