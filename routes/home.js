@@ -1,18 +1,12 @@
 var express = require("express");
 var router = express.Router();
 var passport = require("../config/passport");
-var url = require('url');
+var url = require("url");
 
 // Home
 router.get("/", function (req, res) {
-
   res.render("home/home");
-
 });
-
-
-//
-
 
 // Login
 router.get("/login", function (req, res) {
@@ -23,9 +17,6 @@ router.get("/login", function (req, res) {
     errors: errors,
   });
 });
-
-
-
 
 // Post Login
 router.post(
@@ -68,6 +59,4 @@ router.get("/mypage", function (req, res) {
   res.render("home/mypage");
 });
 
-
 module.exports = router;
-
