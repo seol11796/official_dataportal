@@ -54,7 +54,7 @@ function finedustRequireURLResolver(key, stationName) {
   base_url = api_config.base_url;
 
   start_station = getStationNumber(stationName);
-  end_station = getStationNumber(stationName);
+  end_station = start_station;
 
   return base_url + start_station + "/" + end_station;
 }
