@@ -29,9 +29,6 @@ app.use(methodOverride("_method"));
 app.use(flash());
 app.use(session({ secret: "MySecret", resave: true, saveUninitialized: true }));
 
-
-
-
 // Passport
 app.use(passport.initialize());
 app.use(passport.session());
@@ -48,6 +45,16 @@ app.use(function (req, res, next) {
 app.use("/", require("./routes/home"));
 app.use("/map", util.getPostQueryString, require("./routes/map"));
 app.use("/station", util.getPostQueryString, require("./routes/station"));
+app.use(
+  "/api/complexity",
+  util.getPostQueryString,
+  require("./routes/complexityApi")
+);
+app.use(
+  "/api/finedust",
+  util.getPostQueryString,
+  require("./routes/finedustApi")
+);
 
 // Port setting
 var port = 3000;
