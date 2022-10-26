@@ -9,7 +9,7 @@ var util = require("../util");
 var complexityService = require("../service/complexityService");
 var finedustService = require("../service/finedustService");
 var s3Handling = require("../service/s3Handling");
-var subwayNameService = require("../service/subwayNameService")
+var subwayNameService = require("../service/subwayNameService");
 
 router.get("/", async function (req, res) {
   tmp_stationName = req.query.subway_name;
