@@ -14,7 +14,7 @@
 
       .backgroud_image {
         height: 470px;
-        width: 700px;
+        width: 900px;
         background-image: url("https://s3.ap-northeast-2.amazonaws.com/subweatherimages/<%= station_name %>.PNG");
 
         margin-left: 150px;
@@ -27,8 +27,8 @@
       }
 
       .location_button {
-        margin-left: 150px;
-        margin-top: 150px;
+        margin-left: 550px;
+        margin-top: 270px;
         padding-right: 45px;
         border-radius: 17rem;
         border-width: 0.1rem;
@@ -134,7 +134,7 @@
           type="submit"
           onclick="location.href='/station?subway_name=<%= station_name %>'"
         >
-          <h2 class="location_icon">👇<%= station_name %></h2>
+          <h2 class="location_icon">👇</h2>
         </button>
       </div>
     </div>
