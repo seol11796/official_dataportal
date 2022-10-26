@@ -12,7 +12,7 @@ var subwayNameService = require("../service/subwayNameService")
 
 router.get("/", async function (req, res) {
   tmp_stationName = req.query.subway_name;
-  search_stationName = subwayNameService.getStationName(tmp_stationName)
+  search_stationName = subwayNameService.getStationName(tmp_stationName);
   complex = await complexityService.getComplexity(search_stationName);
   finedust = await finedustService.getFinedust(search_stationName);
 
