@@ -1,25 +1,77 @@
-var api_config = require("../config/complexityApiConfig.json");
-var stationNumbering = require("../config/complexityStationNumber.json");
-var request = require("request");
+const api_config = require("../config/complexityApiConfig.json");
+const stationNumbering = require("../config/complexityStationNumber.json");
+const request = require("request");
 
-async function getComplexity(stationName) {
+const base_url = api_config.base_url;
+const authKey = api_config.Encoding;
+
+// *****************************
+// direct return functions below
+
+async function getComplexityPageResolve(stationName) {
   var ret = new Object();
-
-  const authKey = api_config.Encoding;
-
   var now = new Date();
   var dayOfWeek = now.getDay();
+  var queryTime = resolveQueryTime();
+
+  var requesturl = complexRequireURLResolver(authKey, stationName, dayOfWeek);
+  var res_json = JSON.parse(await getJsonByURL(requesturl));
+  // 상행 여유, 상행 혼잡, 하행 여유, 하행 혼잡
+  var keys = resolveMostTime(res_json);
+
+  ret.complexTime = keys;
+  ret.complexity_state = resolveValue(res_json, keys, queryTime);
+
+  return ret;
+}
+
+async function getAll() {
+  var requesturl = complexAllURLResolver(authKey);
+  return JSON.parse(await getJsonByURL(requesturl));
+}
+
+async function getStation(stationName) {
+  return await getJsonByStationName(stationName);
+}
+
+async function getMostTime(stationName) {
+  var res_json = await getJsonByStationName(stationName);
+  var most_time = resolveMostTime(res_json);
+
+  var ret = new Object();
+  ret.ascending_free = most_time[0];
+  ret.ascending_congestion = most_time[1];
+  ret.decending_free = most_time[2];
+  ret.decending_congestion = most_time[3];
+
+  return ret;
+}
+
+async function getValue(stationName) {
+  var res_json = await getJsonByStationName(stationName);
+  var keys = resolveMostTime(res_json);
+  var query_time = resolveQueryTime();
+  var value = resolveValue(res_json, keys, query_time);
+  var ret = new Object();
+
+  ret.complexity_value = value;
+  return ret;
+}
+
+// ***********************
+// utility functions below
+
+function resolveQueryTime() {
+  var now = new Date();
   var hours = now.getHours();
   var minutes = now.getMinutes();
 
   if (minutes < 30) minutes = "00분";
   else minutes = "30분";
+  return (queryTime = hours + "시" + minutes);
+}
 
-  var queryTime = hours + "시" + minutes;
-
-  var requesturl = complexRequireURLResolver(authKey, stationName, dayOfWeek);
-  var res_json = JSON.parse(await getJSON(requesturl));
-  // 상행 여유, 상행 혼잡, 하행 여유, 하행 혼잡
+function resolveMostTime(res_json) {
   var keys = [0, 0, 0, 0];
   var values = [100.0, 0.0, 100.0, 0.0];
 
@@ -40,6 +92,10 @@ async function getComplexity(stationName) {
     }
   }
 
+  return keys;
+}
+
+function resolveValue(res_json, keys, queryTime) {
   for (var i = 0; i < 4; i++) {
     if (keys[i].length == 6 && keys[i].substr(0, 2) > "12") {
       keys[i] = "오후 " + (keys[i].substr(0, 2) * 1 - 12) + keys[i].substr(2);
@@ -51,16 +107,12 @@ async function getComplexity(stationName) {
   var mean =
     (res_json.data[0][queryTime] * 1 + res_json.data[1][queryTime] * 1) / 2;
 
-  ret.complexTime = keys;
-  if (mean < 33.0) ret.complexity_state = "쾌적";
-  else if (mean < 66.0) ret.complexity_state = "보통";
-  else ret.complexity_state = "나쁨";
-
-  return ret;
+  if (mean < 33.0) return "쾌적";
+  else if (mean < 66.0) return "보통";
+  else return "나쁨";
 }
 
-
-function getJSON(url) {
+function getJsonByURL(url) {
   return new Promise(function (resolve, reject) {
     request(url, function (err, res, body) {
       if (!err && res.statusCode == 200) {
@@ -70,6 +122,13 @@ function getJSON(url) {
       }
     });
   });
+}
+
+async function getJsonByStationName(stationName) {
+  var now = new Date();
+  var dayOfWeek = now.getDay();
+  var requesturl = complexRequireURLResolver(authKey, stationName, dayOfWeek);
+  return JSON.parse(await getJsonByURL(requesturl));
 }
 
 function getStationNumber(stationName) {
@@ -84,7 +143,6 @@ function getStationNumber(stationName) {
 }
 
 function complexRequireURLResolver(key, stationName, dayOfWeek) {
-  var base_url = api_config.base_url;
   var multiplier = 0;
   if (dayOfWeek == 0) multiplier = 284 * 2;
   if (dayOfWeek == 6) multiplier = 284;
@@ -96,6 +154,14 @@ function complexRequireURLResolver(key, stationName, dayOfWeek) {
   return base_url + "?" + page + "&" + perPage + "&" + serviceKey;
 }
 
+function complexAllURLResolver(key) {
+  return base_url + "?page=1&perPage=2000&serviceKey=" + key;
+}
+
 module.exports = {
-  getComplexity,
+  getComplexityPageResolve,
+  getAll,
+  getStation,
+  getMostTime,
+  getValue,
 };
