@@ -11,8 +11,12 @@ var finedustService = require("../service/finedustService");
 
 // get station information
 router.get("/", async function (req, res) {
-  complex = await complexityService.getComplexity(req.query.subway_name);
-  finedust = await finedustService.getFinedust(req.query.subway_name);
+  complex = await complexityService.getComplexityPageResolve(
+    req.query.subway_name
+  );
+  finedust = await finedustService.getFinedustPageResolve(
+    req.query.subway_name
+  );
 
   res.render("stations/about", {
     //"건대입구역" 등 '역'까지 포함한 형태

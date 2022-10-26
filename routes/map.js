@@ -24,8 +24,10 @@ var fs = require("fs");
 router.get("/", async function (req, res) {
   tmp_stationName = req.query.subway_name;
   search_stationName = subwayNameService.getStationName(tmp_stationName);
-  complex = await complexityService.getComplexity(search_stationName);
-  finedust = await finedustService.getFinedust(search_stationName);
+  complex = await complexityService.getComplexityPageResolve(
+    search_stationName
+  );
+  finedust = await finedustService.getFinedustPageResolve(search_stationName);
   //map_picture_path = await s3Handling.download("건대입구");
 
   res.render("maps/index", {
