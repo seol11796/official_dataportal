@@ -1,4 +1,3 @@
-
 var api_config = require("../config/complexityApiConfig.json");
 var stationNumbering = require("../config/complexityStationNumber.json");
 var request = require("request");

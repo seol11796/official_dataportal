@@ -1,5 +1,6 @@
-{
-  "base_url": "https://api.odcloud.kr/api/15071311/v1/uddi:b3803d43-ffe3-4d17-9024-fd6cfa37c284",
-  "Encoding": "your_openapi_encoding_key",
-  "Decoding": "your_openapi_decoding_key"
-}
+  {
+    "base_url": "https://api.odcloud.kr/api/15071311/v1/uddi:b3803d43-ffe3-4d17-9024-fd6cfa37c284",
+    "Encoding": "your_openapi_encoding_key",
+    "Decoding": "your_openapi_decoding_key"
+  }
+

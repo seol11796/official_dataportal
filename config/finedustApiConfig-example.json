@@ -1,4 +1,5 @@
-{
-  "base_url": "http://openapi.seoul.go.kr:8088/7963444664796a703130395845777855/xml/airPolutionInfo/",
-  "authKey": "your_openapi_authKey"
-}
+  {
+    "base_url": "http://openapi.seoul.go.kr:8088/7963444664796a703130395845777855/xml/airPolutionInfo/",
+    "authKey": "your_openapi_authKey"
+  }
+
