@@ -24,7 +24,6 @@
       
       .d-flex{
         width: 350px;
-
         background-color: aliceblue;
       }
 
@@ -42,7 +41,15 @@
           
       }
 
+
      
+    .d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none {
+      width: 30x;
+ 
+      
+    }
+
+
      </style>
    
   </head>
@@ -60,7 +67,10 @@
                   <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
                       <li class="nav-item">
 
+
+
                              <span class="ms-1 d-none d-sm-inline"><h4><%= station_name %>역</h2></span>
+
 
                       </li>
                       <li><hr></hr></li>
@@ -137,9 +147,7 @@
                                       <span> 위치하고 있습니다.</span>
                                        </li>
                                        <br><br><br><br><br><br>
-
                   </ul>
-                  
                 </div>
                   
                 </div>
@@ -149,7 +157,10 @@
                   <input
                   type="button"
                   name="<%= station_name %>"/>                  
+
+
                   <button type="submit" class="location_button" type="submit" onclick="location.href='/station?subway_name=<%= station_name %>'">
+
                     <h2 class="location_icon">
                       👇<%= station_name %>
                    
