@@ -6,114 +6,46 @@ var Usage = require("../models/Usage");
 var User = require("../models/User");
 var File = require("../models/File");
 var util = require("../util");
+var complexityService = require("../service/complexityService");
+var finedustService = require("../service/finedustService");
+var s3Handling = require("../service/s3Handling");
 
-// get station information
-router.get("/:stationName", async function (req, res) {
-  complexityService.getComplexity(req.params.stationName);
-  finedustService.getFinedust(req.params.stationName);
-
-
+router.get("/", async function (req, res) {
+  complex = await complexityService.getComplexity(req.query.subway_name);
+  finedust = await finedustService.getFinedust(req.query.subway_name);
+  map_picture_path = await s3Handling.download("건대입구");
 
   res.render("maps/index", {
-  //// 서비스에서 처리해서 라우트에서 넘겨준 것 여기서 보여주기 
-    station_name:station_name,
-    station_number:station_number, // ex) 2호선, 2 
-  
-    
-    // *가장 혼잡한 시간* 
-    // 상선
-    geton_maxcpx : geton_maxcpx,
-    getoff_maxcpx : getoff_maxcpx, 
-    // 가장 한가한 시간
-    // 하선
-    geton_mincpx : geton_maxcpx,
-    getoff_mincpx : getoff_mincpx,
-
-    // *공기질*
-    // 실제수치 
-    pm : pm ,
-
-    // *편의시설*
-    // 물품보관함
-    locker_location: locker_location ,
-    // 주변 건물 
-    nearby_building : nearby_building ,
-
-    // S3를 통해 불러온 해당 지하철 역 이미지 
-    subway_image : subway_image 
-
-
-  
+    //"건대입구역" 등 '역'까지 포함한 형태
+    station_name: req.query.subway_name,
+    //숫자 하나 혹은 "x호선"으로 아직 결정 못함
+    line_number: null,
+    // "오후 12시30분", "오전 9시00분" 등의 30분 단위. 시간의 경우 십의 자리 0 채움이 없음
+    geton_mincpx: complex[0],
+    geton_maxcpx: complex[1],
+    getoff_mincpx: complex[2],
+    getoff_maxcpx: complex[3],
+    //PMq값을 뺀 x.x 숫자
+    pm: null,
+    //미정
+    locker_location: null,
+    //미정
+    nearby_building: null,
+    //index.js 기준 상대 경로
+    subway_image: map_picture_path,
   });
+});
 
+//serch
+router.get("/:stationName", async function (req, res) {
+  complex = await complexityService.getComplexity(req.params.stationName);
+  finedust = await finedustService.getFinedust(req.params.stationName);
+  res.render("maps/index");
+});
 
-
-
-  // 이전 코드 
-  var page = Math.max(1, parseInt(req.query.page));
-  var limit = Math.max(1, parseInt(req.query.limit));
-  page = !isNaN(page) ? page : 1;
-  limit = !isNaN(limit) ? limit : 10;
-
-  var skip = (page - 1) * limit;
-  var maxPage = 0;
-  var searchQuery = await createSearchQuery(req.query);
-  var usage = [];
-
-  if (searchQuery) {
-    var count = await Usage.countDocuments(searchQuery);
-    maxPage = Math.ceil(count / limit);
-    usage = await Usage.aggregate([
-      { $match: searchQuery },
-      {
-        $lookup: {
-          from: "users",
-          localField: "author",
-          foreignField: "_id",
-          as: "author",
-        },
-      },
-      { $unwind: "$author" },
-      { $sort: { createdAt: -1 } },
-      { $skip: skip },
-      { $limit: limit },
-
-      {
-        $lookup: {
-          from: "files",
-          localField: "attachment",
-          foreignField: "_id",
-          as: "attachment",
-        },
-      },
-      {
-        $unwind: {
-          path: "$attachment",
-          preserveNullAndEmptyArrays: true,
-        },
-      },
-      {
-        $project: {
-          title: 1,
-          author: {
-            username: 1,
-          },
-          views: 1,
-          numId: 1,
-          attachment: {
-            $cond: [
-              { $and: ["$attachment", { $not: "$attachment.isDeleted" }] },
-              true,
-              false,
-            ],
-          },
-          createdAt: 1,
-        },
-      },
-    ]).exec();
-  }
-
-
+// showing route
+router.get("/:startStationName/:endStaionName", function (req, res) {
+  res.render("maps/index");
 });
 
 module.exports = router;

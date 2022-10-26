@@ -1,18 +1,49 @@
+const s3_config = require("../config/s3Config.json");
+const fs = require("fs");
+const AWS = require("aws-sdk");
 
-function getStationImage(stationName){
-    var AWS = require('aws-sdk');
+const bucket_name = s3_config.bucket_name;
+const access_key = s3_config.access_key;
+const secret_key = s3_config.secret_key;
 
-    const s3 = new AWS.S3({   accessKeyId: "AKIAUMX2QPW4D5KDSW5R",   secretAccessKey: "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" });
-    
-    var params = {Bucket: 'subweatherimages', Key: 'myImageFile.jpg'};
-    
-    var file = require('fs').createWriteStream('/path/to/file.jpg');
-    
-    s3.getObject(params).createReadStream().pipe(file);
-    
+const S3 = new AWS.S3({
+  region: "ap-northeast-2",
+  credentials: {
+    accessKeyId: access_key,
+    secretAccessKey: secret_key,
+  },
+});
+
+async function upload(stationName) {
+  var object_name = stationName + ".PNG";
+  var local_file_path = "./mapPictures/" + stationName + ".PNG";
+  await S3.putObject({
+    Bucket: bucket_name,
+    Key: object_name,
+    Body: fs.createReadStream(local_file_path),
+  }).promise();
 }
 
+async function download(stationName) {
+  var object_name = stationName + ".PNG";
+  var local_file_path = "./mapPictures/" + stationName + ".PNG";
+  AWS.config.update({
+    accessKeyId: access_key,
+    sercetAccessKey: secret_key,
+  });
+  let outStream = fs.createWriteStream(local_file_path);
+  let inStream = S3.getObject({
+    Bucket: bucket_name,
+    Key: object_name,
+  }).createReadStream();
+
+  inStream.pipe(outStream);
+  inStream.on("end", () => {});
+
+  return local_file_path;
+}
 
 module.exports = {
-    getStationImage,
-  };
+  upload,
+  download,
+};

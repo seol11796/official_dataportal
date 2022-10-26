@@ -1,19 +1,12 @@
 var express = require("express");
 var router = express.Router();
 var passport = require("../config/passport");
+var url = require("url");
 
 // Home
 router.get("/", function (req, res) {
-  res.render("home/home",{
-    
-  });
+  res.render("home/home");
 });
-
-/*
-router.get("/about", function (req, res) {
-  res.render("home/about");
-});
-*/
 
 // Login
 router.get("/login", function (req, res) {
@@ -50,7 +43,7 @@ router.post(
   },
 
   passport.authenticate("local-login", {
-    successRedirect: "/posts",
+    successRedirect: "/",
     failureRedirect: "/login",
   })
 );
@@ -59,6 +52,11 @@ router.post(
 router.get("/logout", function (req, res) {
   req.logout();
   res.redirect("/");
+});
+
+//mypage
+router.get("/mypage", function (req, res) {
+  res.render("home/mypage");
 });
 
 module.exports = router;

@@ -160,3 +160,7 @@ uploadedFiles
 
 # secrets
 *ApiConfig.json
+*s3Config.json
+
+# map files
+mapPictures*

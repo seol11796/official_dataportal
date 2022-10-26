@@ -46,8 +46,8 @@ app.use(function (req, res, next) {
 
 // Routes
 app.use("/", require("./routes/home"));
-app.use("/map", util.getPostQueryString, require("./routes/station"));
-app.use("/station", util.getPostQueryString, require("./routes/map"));
+app.use("/map", util.getPostQueryString, require("./routes/map"));
+app.use("/station", util.getPostQueryString, require("./routes/station"));
 
 // Port setting
 var port = 3000;

@@ -1,27 +1,51 @@
-<nav class="navbar navbar-expand-sm navbar-light bg-light mb-3">
-  <div class="container">
-    <div class="navbar-brand">My Website</div>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+
+
+
+<html>
+<head>
+  <style>
+input {
+  width: 500px;
+}
+
+button {
+  margin-left:5px;
+}
+
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">지하철 날씨</a>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav">
-        <li class="nav-item"><a href="/" class="nav-link">홈</a></li>
-        
-        <li class="nav-item"><a href="/posts" class="nav-link">데이터찾기</a></li>
-        <li class="nav-item"><a href="/application" class="nav-link">데이터신청</a></li>
-        <li class="nav-item"><a href="/usage" class="nav-link">데이터활용</a></li>
-        <li class="nav-item"><a href="/about" class="nav-link">기타</a></li>
-      </ul>
-      <ul class="navbar-nav ml-auto">
-        <% if(isAuthenticated){ %>
-          <li class="nav-item"><a href="/users/<%= currentUser.username %>" class="nav-link">My Account</a></li>
-          <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
-        <% } else { %>
-          <li class="nav-item"><a href="/users/new" class="nav-link">Sign Up</a></li>
-          <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
-        <% } %>
-      </ul>
+      <form class="d-flex" method="get" action="/map">
+        <input
+          class="form-control me-2"
+          type="search"
+          placeholder="Search"
+          aria-label="Search"
+          name="subway_name"
+        />
+        <button class="btn btn-outline-success" type="submit">Search</button>
+      </form>
     </div>
+    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+      <% if(isAuthenticated){ %>
+      <li class="nav-item">
+        <a href="/users/<%= currentUser.username %>" class="nav-link"
+          >My Account</a
+        >
+      </li>
+      <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+      <% } else { %>
+      <li class="nav-item">
+        <a href="/users/new" class="nav-link">Sign Up</a>
+      </li>
+      <li class="nav-item"><a href="/login" class="nav-link">Login</a></li>
+      <% } %>
+    </ul>
   </div>
 </nav>
+</body>
+</html>
