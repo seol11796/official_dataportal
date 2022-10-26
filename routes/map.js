@@ -9,6 +9,16 @@ var util = require("../util");
 var complexityService = require("../service/complexityService");
 var finedustService = require("../service/finedustService");
 var s3Handling = require("../service/s3Handling");
+var fs = require("fs");
+
+router.get("/pic", async function (req, response) {
+  var filepath = "./mapPictures/" + req.query.subway_name + ".PNG";
+  fs.readFile(filepath, function (err, data) {
+    response.writeHead(200);
+    response.write(data);
+    response.end();
+  });
+});
 
 router.get("/", async function (req, res) {
   complex = await complexityService.getComplexity(req.query.subway_name);
