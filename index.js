@@ -43,6 +43,7 @@ app.use(function (req, res, next) {
 
 // Routes
 app.use("/", require("./routes/home"));
+app.use('/users', require('./routes/users'));
 app.use("/map", util.getPostQueryString, require("./routes/map"));
 app.use("/station", util.getPostQueryString, require("./routes/station"));
 app.use(

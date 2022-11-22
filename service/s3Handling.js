@@ -1,53 +1,71 @@
-const s3_config = require("../config/s3Config.json");
-const fs = require("fs");
-const AWS = require("aws-sdk");
 
-const bucket_name = s3_config.bucket_name;
-const access_key = s3_config.access_key;
-const secret_key = s3_config.secret_key;
+var key_config = require("../config/s3Config.json");
+const { FSx } = require('aws-sdk');
+var AWS = require('aws-sdk');
 
-// S3 객체
-const S3 = new AWS.S3({
-  region: "ap-northeast-2",
-  credentials: {
-    accessKeyId: access_key,
-    secretAccessKey: secret_key,
-  },
-});
+// const endpoint = new AWS.Endpoint('https://kr.object.ncloudstorage.com');
+var region = 'ap-northeast-2"';
 
-// 파일 업로드
-async function upload(stationName) {
-  var object_name = stationName + ".PNG";
-  var local_file_path = "./mapPictures/" + stationName + ".PNG";
-  await S3.putObject({
-    Bucket: bucket_name,
-    Key: object_name,
-    ACL: "public-read",
-    Body: fs.createReadStream(local_file_path),
-  }).promise();
+const bucket_name = 'images';
+
+// Bucket 만들기 
+async function createS3Bucket(){
+
+    const access_key = key_config.access_key;
+    const secret_key  = key_config.secret_key;
+    
+    const S3 = new AWS.S3({
+        access_key,
+        secret_key,
+        region,
+        credentials: {
+            accessKeyId : access_key,
+            secretAccessKey: secret_key
+        }
+    });
+    
+
+var createdBucket = 
+    await S3.createBucket({
+        Bucket: bucket_name,
+        CreateBucketConfiguration: {}
+    }).promise()
+
+    return createdBucket;
 }
 
-// 파일 다운로드
-async function download(stationName) {
-  var object_name = stationName + ".PNG";
-  var local_file_path = "./mapPictures/" + stationName + ".PNG";
-  AWS.config.update({
-    accessKeyId: access_key,
-    sercetAccessKey: secret_key,
-  });
-  let outStream = fs.createWriteStream(local_file_path);
-  let inStream = S3.getObject({
-    Bucket: bucket_name,
-    Key: object_name,
-  }).createReadStream();
-
-  inStream.pipe(outStream);
-  inStream.on("end", () => {});
-
-  return local_file_path;
+// Bucket 목록 조회 
+async function lookupBucket(){
+let {Buckets } = await S3.listBuckets().promise();
+for(let bucket of Buckets)
+{
+    console.log(bucket.Name);
 }
+
+}
+
+// Bucket 파일 업로드 
+async function uploadBucketFile(){
+let object_name = 'subway-images/';
+
+await S3.putObject({
+    Bucket: bucket_name,
+    Key : object_name
+}).promise()
+
+
+await S3.project({
+    Bucket:bucket_name,
+    Key: object_name,
+    ACL : 'public-read',
+    Body: fs.createReadStream(local_file_path)
+}).promise();
+
+}
+
+
 
 module.exports = {
-  upload,
-  download,
-};
+    createS3Bucket,
+    lookupBucket,
+  };
