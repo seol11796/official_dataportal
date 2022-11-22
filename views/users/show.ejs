@@ -8,7 +8,6 @@
       
     <div class="container mb-3">
 
-      <h3 class="contentBoxTop"><%= user.username %></h3>
 
       <form class="user-form" action="/users" method="post">
         <fieldset disabled>
@@ -26,13 +25,16 @@
           </div>
         </fieldset>
       </form>
+      <h3 class="contentBoxTop">username: <%= user.username %></h3>
+      <h4 class="pb-2 border-bottom">자주가는 역 : <%= subway_name %>역</h4>
 
+      
       <div>
-        <% if(isAuthenticated && currentUser.id == user.id){ %>
-          <a class="btn btn-primary" href="/users/<%= user.username %>/edit">Edit</a>
-        <% } %>
+        
+ 
+  
       </div>
-
+        
     </div>
   </body>
 </html>
