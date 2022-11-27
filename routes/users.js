@@ -25,9 +25,18 @@ router.post('/', function(req, res){
 // show
 router.get('/:username', util.isLoggedin, checkPermission, function(req, res){
   User.findOne({username:req.params.username}, function(err, user){
+    console.log(user);
     if(err) return res.json(err);
+
+    // req.query.subway_name을 User DB에 저장하는 서비스
+    user.favorites.push("건대입구");
+    user.save();
+
+
     res.render('users/show', {user:user, subway_name:req.query.subway_name});
   });
+
+
 });
 
 
