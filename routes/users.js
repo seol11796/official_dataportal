@@ -30,10 +30,10 @@ router.get('/:username', util.isLoggedin, checkPermission, function(req, res){
 
     // req.query.subway_name을 User DB에 저장하는 서비스
     user.favorites.push(req.query.subway_name);
-    user.save();
+    //user.save();
 
 
-    res.render('users/show', {user:user, subway_name:user.favorites});
+    res.render('users/show', {user:user, subway_name1:user.favorites[0], subway_name2:user.favorites[1]});
   });
 
 
