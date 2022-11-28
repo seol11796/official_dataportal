@@ -2,6 +2,12 @@
 <html>
   <head>
     <style>
+      .favorite_button {
+        border-radius: 3rem;
+        background-color: #0a0a23;
+        color: #fff;
+        border:none;
+      }
       p {
         border-width: 8px;
         border-style: solid;
@@ -22,6 +28,7 @@
       <div class="container px-4 py-5" id="icon-grid">
         <div>
         <h2 class="pb-2 border-bottom"><%= station_name %>역</h2>
+        <div>최대 3개까지 입력 가능합니다. </div>
         <button type="submit"
          class="favorite_button" type="submit" 
         onclick="location.href='/users/<%= currentUser.username %>?subway_name=<%= station_name %>'"> 즐겨찾는 역으로 등록</button>

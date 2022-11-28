@@ -1,6 +1,18 @@
 <!DOCTYPE html>
 <html>
   <head>
+
+    <style>
+      .location_button {
+        background-color: transparent;
+        border:none;
+      }
+
+      .click_button {
+        color:blueviolet;
+
+      }
+    </style>
     <%- include('../partials/head') %>
   </head>
   <body>
@@ -21,9 +33,13 @@
           </div>
         </fieldset>
       </form>
-      <h3 class="contentBoxTop">username: <%= user.username %></h3>
-      <h4 class="pb-2 border-bottom">자주가는 역 : <button><%= subway_name1 %></button> , <button><%= subway_name2 %></button></h4>
+      <h5 class="contentBoxTop">username: <%= user.username %></h5>
+      <h4 class="pb-2 border-bottom">자주가는 역 : 
 
+        <button type="submit" class="location_button" onclick="location.href='/station?subway_name=<%= subway_name1 %>'"><div class="click_button"><%= subway_name1 %></div></button> 
+         <button type="submit" class="location_button" onclick="location.href='/station?subway_name=<%= subway_name2 %>'"><div class="click_button"><%= subway_name2 %></div></button> 
+        <button type="submit" class="location_button" onclick="location.href='/station?subway_name=<%= subway_name3 %>'"><div class="click_button"><%= subway_name3 %></div></button> 
+      
       
       <div>
         
