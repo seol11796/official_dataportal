@@ -12,21 +12,17 @@
       <form class="user-form" action="/users" method="post">
         <fieldset disabled>
           <div class="form-group row">
-            <label for="name" class="col-sm-3 col-form-label">Name</label>
-            <div class="col-sm-9">
-              <input class="form-control" type="text" id="name" name="name" value="<%= user.name %>">
-            </div>
+           
+    
           </div>
           <div class="form-group row">
-            <label for="email" class="col-sm-3 col-form-label">Email</label>
-            <div class="col-sm-9">
-              <input class="form-control" type="text" id="email" name="email" value="<%= user.email %>">
-            </div>
+            
+            
           </div>
         </fieldset>
       </form>
       <h3 class="contentBoxTop">username: <%= user.username %></h3>
-      <h4 class="pb-2 border-bottom">자주가는 역 : <%= subway_name %>역</h4>
+      <h4 class="pb-2 border-bottom">자주가는 역 : <button><%= subway_name1 %></button> , <button><%= subway_name2 %></button></h4>
 
       
       <div>
