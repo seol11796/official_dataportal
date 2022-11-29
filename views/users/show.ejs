@@ -34,16 +34,19 @@
         </fieldset>
       </form>
       <h5 class="contentBoxTop">username: <%= user.username %></h5>
-      <h4 class="pb-2 border-bottom">자주가는 역 : </h4>
+      <h4 class="pb-2 border-bottom">자주가는 역 : 
 
-        <button type="submit" class="location_button" onclick="location.href='/station?subway_name=<%= subway_name1 %>'"><div class="click_button"><%= subway_name1 %></div></button> 
-         <button type="submit" class="location_button" onclick="location.href='/station?subway_name=<%= subway_name2 %>'"><div class="click_button"><%= subway_name2 %></div></button> 
-        
       
-      
+        </h4>
+    
+     
       <div>
-        
- 
+            <h4>
+        <button type="submit" class="location_button" onclick="location.href='/station?subway_name=<%= subway_name1 %>'"><div class="click_button"><%= subway_name1 %></div></button> 
+        <button type="submit" class="location_button" onclick="location.href='/station?subway_name=<%= subway_name2 %>'"><div class="click_button"><%= subway_name2 %></div></button> 
+        <button type="submit" class="location_button" onclick="location.href='/station?subway_name=<%= subway_name3 %>'"><div class="click_button"><%= subway_name3 %></div></button> 
+       
+      </h4>
   
       </div>
         

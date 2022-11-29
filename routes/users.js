@@ -42,6 +42,23 @@ router.get('/:username', util.isLoggedin, checkPermission, function(req, res){
 });
 
 
+// delete favorite
+router.get('/delete/:username', util.isLoggedin, checkPermission, function(req, res){
+  User.findOne({username:req.params.username}, function(err, user){
+    console.log(user);
+    if(err) return res.json(err);
+
+    // req.query.subway_name을 User DB에 저장하는 서비스
+  user.favorites.remove(req.query.subway_name);
+   user.save();
+
+
+    res.render('users/show', {user:user, subway_name1:user.favorites[0], subway_name2:user.favorites[1], subway_name3:user.favorites[2]});
+  });
+
+
+}
+  );
 
 // edit
 router.get('/:username/favorite', util.isLoggedin, checkPermission, function(req, res){
@@ -57,6 +74,10 @@ router.get('/:username/favorite', util.isLoggedin, checkPermission, function(req
     
   }
 });
+
+
+
+
 
 // favorite update
 router.get('/:username/edit', util.isLoggedin, checkPermission, function(req, res){
