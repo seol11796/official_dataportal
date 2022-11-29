@@ -18,7 +18,10 @@ router.get("/", async function (req, res) {
     req.query.subway_name
   );
 
+  // 여기서 유저 위치에 등록되어 있는 지 확인해서 다른 화면 보여주기 
+  
   res.render("stations/about", {
+
     //"건대입구역" 등 '역'까지 포함한 형태
     station_name: req.query.subway_name,
     //숫자 하나 혹은 "x호선"으로 아직 결정 못함
@@ -32,7 +35,10 @@ router.get("/", async function (req, res) {
     //미정
     nearby_building: null,
   });
-});
+
+  }
+
+);
 
 module.exports = router;
 
