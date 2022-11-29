@@ -40,14 +40,14 @@
             <%if(currentUser.favorites.includes(station_name)){ %>
               <div>                  
                 <button type="submit"
-                class="favorite_button" type="submit" 
-               onclick="location.href='/users/<%= currentUser.username %>?subway_name=<%= station_name %>'"> 삭제</button>
+                class="favorite_button" type="submit" name="delete_button"
+               onclick="location.href='/users/delete/<%= currentUser.username %>?subway_name=<%= station_name %>'"> 삭제</button>
                         </div>
               <% }
               else{  %>
                 <div>                  
                   <button type="submit"
-                  class="favorite_button" type="submit" 
+                  class="favorite_button" type="submit" name="add_button"
                  onclick="location.href='/users/<%= currentUser.username %>?subway_name=<%= station_name %>'"> 즐겨찾는 역으로 등록</button>
                           </div>
              <% } %> 
