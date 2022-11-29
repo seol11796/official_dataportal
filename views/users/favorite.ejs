@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <%- include('../partials/head') %>
+    <style>
+      .location_button {
+        background-color: transparent;
+        border:none;
+      }
+
+      .click_button {
+        color:blueviolet;
+
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('../partials/nav') %>
+
+    <div class="container mb-3">
+
+          
+            
+          </div>
+        </div>
+
+        <hr></hr>
+
+        <div class="form-group row">
+          
+          <div class="col-sm-9">
+            <h5 class="contentBoxTop">username: <%= user.username %></h5>
+
+        
+          </div>
+        </div>
+
+        <h4 class="pb-2 border-bottom">자주가는 역 : </h4>
+
+        <h4>
+        <button type="submit" class="location_button" onclick="location.href='/station?subway_name=<%= subway_name1 %>'"><div class="click_button"><%= subway_name1 %></div></button> 
+         <button type="submit" class="location_button" onclick="location.href='/station?subway_name=<%= subway_name2 %>'"><div class="click_button"><%= subway_name2 %></div></button> 
+        <button type="submit" class="location_button" onclick="location.href='/station?subway_name=<%= subway_name3 %>'"><div class="click_button"><%= subway_name3 %></div></button> 
+            </h4>
+     
+    </div>
+  </body>
+</html>

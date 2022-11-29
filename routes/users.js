@@ -22,6 +22,8 @@ router.post('/', function(req, res){
   });
 });
 
+
+
 // show
 router.get('/:username', util.isLoggedin, checkPermission, function(req, res){
   User.findOne({username:req.params.username}, function(err, user){
@@ -29,8 +31,8 @@ router.get('/:username', util.isLoggedin, checkPermission, function(req, res){
     if(err) return res.json(err);
 
     // req.query.subway_name을 User DB에 저장하는 서비스
-    user.favorites.push(req.query.subway_name);
-    user.save();
+  user.favorites.push(req.query.subway_name);
+   user.save();
 
 
     res.render('users/show', {user:user, subway_name1:user.favorites[0], subway_name2:user.favorites[1], subway_name3:user.favorites[2]});
@@ -40,18 +42,19 @@ router.get('/:username', util.isLoggedin, checkPermission, function(req, res){
 });
 
 
+
 // edit
-router.get('/:username/edit', util.isLoggedin, checkPermission, function(req, res){
+router.get('/:username/favorite', util.isLoggedin, checkPermission, function(req, res){
   var user = req.flash('user')[0];
   var errors = req.flash('errors')[0] || {};
   if(!user){
     User.findOne({username:req.params.username}, function(err, user){
       if(err) return res.json(err);
-      res.render('users/edit', { username:req.params.username, user:user, errors:errors });
+      res.render('users/favorite', {user:user, subway_name1:user.favorites[0], subway_name2:user.favorites[1], subway_name3:user.favorites[2]});
     });
   }
   else {
-    res.render('users/edit', { username:req.params.username, user:user, errors:errors });
+    
   }
 });
 
