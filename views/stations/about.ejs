@@ -116,6 +116,8 @@
                 <i class="fa-regular fa-face-smile"></i>
 
                 현재 <%= station_name %>은 <%= complexity_state %>한 편이에요!
+               
+               
               </p>
             </div>
 
@@ -123,13 +125,16 @@
         
         </div>
       </div>
-      
+   
+      <h5 class="contentBoxTop">Y좌표 <%= Y_point %></h5>
+      <h5 class="contentBoxTop">X좌표 <%= X_point %></h5>
       <div>
         <div>엘리베이터 위치 </div>
         <div id="map_ma"></div>
         <script type="text/javascript">
           $(document).ready(function() {
-            var myLatlng = new google.maps.LatLng(37.539922,127.070609); // 위치값 위도 경도
+        var myLatlng = new google.maps.LatLng(37.539922,127.070609); // 위치값 위도 경도
+        
         var Y_point			= 37.539922;		// Y 좌표
         var X_point			= 127.070609;		// X 좌표
         var zoomLevel		= 18;				// 지도의 확대 레벨 : 숫자가 클수록 확대정도가 큼
