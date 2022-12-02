@@ -66,6 +66,7 @@ router.get('/:username/favorite', util.isLoggedin, checkPermission, function(req
   var errors = req.flash('errors')[0] || {};
   if(!user){
     User.findOne({username:req.params.username}, function(err, user){
+      console.log(user);
       if(err) return res.json(err);
       res.render('users/favorite', {user:user, subway_name1:user.favorites[0], subway_name2:user.favorites[1], subway_name3:user.favorites[2]});
     });

@@ -18,8 +18,9 @@ mongoose.connect(
 
 var structor = new Schema({  //test_a의 구조
   "_id" : Schema.Types.ObjectId,
-  "title" : String,
-  "num" : Number,
+  "StationName" : String,
+  "Elevator" : Array,
+  "Lift" : Array
 });
 
 structor.set('collection', 'stationmodels');  //컬렉션 이름을 이곳에서 지정한다.
@@ -39,8 +40,9 @@ router.get("/", async function (req, res) {
   );
 
 
-  target.findOne({StationName: '종로3가'}).then((docs) => {
-    console.log(docs)
+  target.find({StationName:'건대입구'}).then((docs) => {
+    console.log(docs);
+
   })
 
   /*
