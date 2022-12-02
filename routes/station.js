@@ -9,6 +9,26 @@ var util = require("../util");
 var complexityService = require("../service/complexityService");
 var finedustService = require("../service/finedustService");
 
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
+var url = 'mongodb+srv://seol:1218@cluster0.km1y7qr.mongodb.net/?retryWrites=true&w=majority';
+mongoose.connect(
+  "mongodb+srv://seol:1218@cluster0.km1y7qr.mongodb.net/?retryWrites=true&w=majority"
+);
+
+var structor = new Schema({  //test_a의 구조
+  "_id" : Schema.Types.ObjectId,
+  "title" : String,
+  "num" : Number,
+});
+
+structor.set('collection', 'stationmodels');  //컬렉션 이름을 이곳에서 지정한다.
+
+var target = mongoose.model("stationmodels", structor );  //test_b라는 컬렉션을
+
+
+
+
 // get station information
 router.get("/", async function (req, res) {
   complex = await complexityService.getComplexityPageResolve(
@@ -17,6 +37,25 @@ router.get("/", async function (req, res) {
   finedust = await finedustService.getFinedustPageResolve(
     req.query.subway_name
   );
+
+
+  target.findOne({StationName: '종로3가'}).then((docs) => {
+    console.log(docs)
+  })
+
+  /*
+  new Promise(function (aa,qq){
+
+    target.find({StationName: "종로3가"},function(ee,bb){  //아무 조건없이 조회하는데..
+        console.log(bb.length,'bb');  //이제 나온다!!
+        aa('succ');
+    });
+}).then(function(){
+    mongoose.disconnect();    
+});
+
+*/
+
 
   // 여기서 유저 위치에 등록되어 있는 지 확인해서 다른 화면 보여주기 
   
