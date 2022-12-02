@@ -43,9 +43,12 @@ router.get("/", async function (req, res) {
     //console.log(docs);
   
     console.log("Elevator")
-
     console.log(docs[0].Elevator[0].Point.coordinates[0]);
     console.log(docs[0].Elevator[0].Point.coordinates[1]);
+
+    console.log("Lift")
+    console.log(docs[0].Lift[0].Point.coordinates[0]);
+    console.log(docs[0].Lift[0].Point.coordinates[1]);
 
     res.render("stations/about", {
 
@@ -62,15 +65,16 @@ router.get("/", async function (req, res) {
       //미정
       nearby_building: null,
   
-      Y_point: docs[0].Elevator[0].Point.coordinates[1],
-      X_point: docs[0].Elevator[0].Point.coordinates[0]
+      Elevator_Y_point: docs[0].Elevator[0].Point.coordinates[1],
+      Elevator_X_point: docs[0].Elevator[0].Point.coordinates[0],
+
+      Lift_Y_point: docs[0].Lift[0].Point.coordinates[1],
+      Lift_X_point: docs[0].Lift[0].Point.coordinates[0],
   
     });
 
   })
 
-  
-  
 
   }
 
