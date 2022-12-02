@@ -23,10 +23,9 @@ var structor = new Schema({  //test_a의 구조
   "Lift" : Array
 });
 
-structor.set('collection', 'stationmodels');  //컬렉션 이름을 이곳에서 지정한다.
+structor.set('collection', 'stationmodels');  // 컬렉션 이름을 이곳에서 지정한다.
 
-var target = mongoose.model("stationmodels", structor );  //test_b라는 컬렉션을
-
+var target = mongoose.model("stationmodels", structor );  
 
 
 
@@ -40,42 +39,38 @@ router.get("/", async function (req, res) {
   );
 
 
-  target.find({StationName:'건대입구'}).then((docs) => {
-    console.log(docs);
+  target.find({StationName:req.query.subway_name}).then((docs) => {
+    //console.log(docs);
+  
+    console.log("Elevator")
+
+    console.log(docs[0].Elevator[0].Point.coordinates[0]);
+    console.log(docs[0].Elevator[0].Point.coordinates[1]);
+
+    res.render("stations/about", {
+
+      //"건대입구역" 등 '역'까지 포함한 형태
+      station_name: req.query.subway_name,
+      //숫자 하나 혹은 "x호선"으로 아직 결정 못함
+      line_number: null,
+      //쾌적, 적당, 복잡 중 하나
+      complexity_state: complex.complexity_state,
+      //좋음, 보통, 나쁨 중 하나
+      dust_state: finedust.dust_state,
+      //미정
+      locker_location: null,
+      //미정
+      nearby_building: null,
+  
+      Y_point: docs[0].Elevator[0].Point.coordinates[1],
+      X_point: docs[0].Elevator[0].Point.coordinates[0]
+  
+    });
 
   })
 
-  /*
-  new Promise(function (aa,qq){
-
-    target.find({StationName: "종로3가"},function(ee,bb){  //아무 조건없이 조회하는데..
-        console.log(bb.length,'bb');  //이제 나온다!!
-        aa('succ');
-    });
-}).then(function(){
-    mongoose.disconnect();    
-});
-
-*/
-
-
-  // 여기서 유저 위치에 등록되어 있는 지 확인해서 다른 화면 보여주기 
   
-  res.render("stations/about", {
-
-    //"건대입구역" 등 '역'까지 포함한 형태
-    station_name: req.query.subway_name,
-    //숫자 하나 혹은 "x호선"으로 아직 결정 못함
-    line_number: null,
-    //쾌적, 적당, 복잡 중 하나
-    complexity_state: complex.complexity_state,
-    //좋음, 보통, 나쁨 중 하나
-    dust_state: finedust.dust_state,
-    //미정
-    locker_location: null,
-    //미정
-    nearby_building: null,
-  });
+  
 
   }
 
