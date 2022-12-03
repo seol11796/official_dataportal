@@ -25,7 +25,11 @@
       }
 
       .ela {
-        background-color: aqua;
+        background-color: rgb(255, 255, 255);
+        color: rgb(82, 81, 81);
+        border-radius: 1rem;
+        font-size:larger;
+        font-weight: 600;
       }
     </style>
     <%- include('../partials/head') %>
@@ -63,7 +67,6 @@
           
           
           </div>
-
 
 
 
@@ -130,19 +133,16 @@
         </div>
       </div>
    
-      <h5 class="contentBoxTop">Y좌표 <%= Elevator_Y_point %></h5>
-      <h5 class="contentBoxTop">X좌표 <%= Elevator_X_point %></h5>
       <div>
       <div>
-        <div class="ela">엘리베이터 위치 </div>
+        <div class="ela">엘리베이터와 리프트 위치를 아래 지도에서 확인 가능합니다. </div>
         <div id="map_ma"></div>
         <script type="text/javascript">
 
           // elevator 
           $(document).ready(function() {
         var myLatlng = new google.maps.LatLng(37.539922,127.070609); // 위치값 위도 경도
-        var myLatlng2 = new google.maps.LatLng(37.539922,127.070609); // 위치값 위도 경도
-        
+
         var Elevator_Y_point = "<%= Elevator_Y_point%>"; 
         var Elevator_X_point = "<%= Elevator_X_point%>"; 
         var Lift_Y_point = "<%= Lift_Y_point%>"; 
@@ -180,39 +180,97 @@
             );
 
           
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.open(map, marker);
+        
+        }  );      
+      });
+
+
+      $(document).ready(function() {
+        var myLatlng = new google.maps.LatLng(37.539922,127.070609); // 위치값 위도 경도
+
+        var Elevator_Y_point = "<%= Elevator_Y_point%>"; 
+        var Elevator_X_point = "<%= Elevator_X_point%>"; 
+        var Lift_Y_point = "<%= Lift_Y_point%>"; 
+        var Lift_X_point = "<%= Lift_X_point%>";
+        //var Y_point			= 37.539922;	// Y 좌표
+        //var X_point			= 127.070609;		// X 좌표
+        var zoomLevel		= 18;				// 지도의 확대 레벨 : 숫자가 클수록 확대정도가 큼
+        var markerTitle		= "엘리베이터";		// 현재 위치 마커에 마우스를 오버을때 나타나는 정보
+        var markerTitle2 = "리프트"
+        var markerMaxWidth	= 300;				// 마커를 클릭했을때 나타나는 말풍선의 최대 크기
+      
+      // 말풍선 내용
+        var contentString	= '<div>' +
+        '<h2>엘리베이터</h2>'+
+        '<p>이 위치에 엘리베이터가 있습니다.</p>' +
+        
+        '</div>';
+
+        var contentString2 = '<div>' +
+        '<h2>리프트</h2>'+
+        '<p>이 위치에 리프트가 있습니다.</p>' +
+        
+        '</div>';
+
+      
+        var myLatlng = new google.maps.LatLng(Elevator_Y_point, Elevator_X_point);
+
         var myLatlng2 = new google.maps.LatLng(Lift_Y_point, Lift_X_point);
-        var mapOptions2 = {
+
+
+        var mapOptions = {
                   zoom: zoomLevel,
-                  center: myLatlng2,
+                  center: myLatlng,
                   mapTypeId: google.maps.MapTypeId.ROADMAP
                 }
-        var map2 = new google.maps.Map(document.getElementById('map_ma'), mapOptions2);
-        var marker2 = new google.maps.Marker({
-                            position: myLatlng2,
-                            map: map2,
+
+
+        var map = new google.maps.Map(document.getElementById('map_ma'), mapOptions);
+        var marker = new google.maps.Marker({
+                            position: myLatlng,
+                            map: map,
                             title: markerTitle
         });
-     
-            var infowindow2 = new google.maps.InfoWindow(
+
+        var marker2 = new google.maps.Marker({
+                            position: myLatlng2,
+                            map: map,
+                            title: markerTitle2
+        });
+
+        var infowindow = new google.maps.InfoWindow(
                               {
                                 content: contentString,
                                 maxWizzzdth: markerMaxWidth
                               }
             );
 
+            var infowindow2 = new google.maps.InfoWindow(
+                              {
+                                content: contentString2,
+                                maxWizzzdth: markerMaxWidth
+                              }
+            );
+ 
         google.maps.event.addListener(marker, 'click', function() {
           infowindow.open(map, marker);
         
-        }  );
+        }  );      
+
         google.maps.event.addListener(marker2, 'click', function() {
-          infowindow2.open(map2, marker2);
+          infowindow2.open(map, marker2);
         
-        }  );
-        
+        }  );      
+
+
       });
 
-
           </script>
+    
+          
+
 
       </div>
 
