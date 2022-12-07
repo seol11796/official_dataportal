@@ -105,7 +105,6 @@ router.get("/", async function (req, res) {
       Lift_X_point: docs[0].Lift[0].Point.coordinates[0],
       
 
-
     });
 
   })
