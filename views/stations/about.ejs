@@ -212,8 +212,10 @@
                   var map2 = new google.maps.Map(document.getElementById('map_ma2'), mapOptions);
                
 
-                  var infowindow = new google.maps.InfoWindow();
-                  var infowindow2 = new google.maps.InfoWindow();
+                  var infowindow = new google.maps.InfoWindow({content:contentString,
+                    maxWizzzdth: markerMaxWidth});
+                  var infowindow2 = new google.maps.InfoWindow({content:contentString2,
+                    maxWizzzdth: markerMaxWidth});
 
                   for(var i = 0; i<elevator_length; i++){
                     marker = new google.maps.Marker({
@@ -225,7 +227,7 @@
 
                     google.maps.event.addListener(marker,'click',(function(marker,i){
                       return function(){
-                        infowindow.setContent("엘리베이터 위치");
+                        //infowindow.setContent("엘리베이터 위치");
                         infowindow.open(map,marker);
                       }
                     })(marker,i));
@@ -249,7 +251,7 @@
 
                     google.maps.event.addListener(marker,'click',(function(marker,i){
                       return function(){
-                        infowindow2.setContent("리프트 위치");
+                       // infowindow2.setContent("리프트 위치");
                         infowindow2.open(map,marker);
                       }
                     })(marker,i));
