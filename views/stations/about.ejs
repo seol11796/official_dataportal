@@ -99,10 +99,9 @@
 
               <div>
                 <div>
-                  <p>
-                  <%= array_sample[0] %> <%= array_sample[1] %>       
-                  </p>
+                  
                   <div class="ela">엘리베이터와 리프트 위치를 아래 지도에서 확인 가능합니다. </div>
+                  <div><%= array_sample[0]%><%= array_sample[1]%></div>
                   <div id="map_ma"></div>
                   <script type="text/javascript">
           
@@ -182,7 +181,7 @@
                   '</div>';
                     
 
-                    <div></div>
+                    
                   var myLatlng = new google.maps.LatLng(Elevator_Y_point, Elevator_X_point);
                   
                   var myLatlng2 = new google.maps.LatLng(Lift_Y_point, Lift_X_point);
