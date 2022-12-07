@@ -41,7 +41,7 @@ router.get("/", async function (req, res) {
 
   target.find({StationName:req.query.subway_name}).then((docs) => {
     //console.log(docs);
-  
+    console.log(docs[0].Elevator.length);
     console.log("Elevator")
     console.log(docs[0].Elevator[0].Point.coordinates[0]);
     console.log(docs[0].Elevator[0].Point.coordinates[1]);
@@ -51,7 +51,7 @@ router.get("/", async function (req, res) {
     console.log(docs[0].Lift[0].Point.coordinates[1]);
 
     res.render("stations/about", {
-
+      array_sample : ["안녕","하세요"],
       //"건대입구역" 등 '역'까지 포함한 형태
       station_name: req.query.subway_name,
       //숫자 하나 혹은 "x호선"으로 아직 결정 못함
@@ -64,13 +64,20 @@ router.get("/", async function (req, res) {
       locker_location: null,
       //미정
       nearby_building: null,
+
+
   
       Elevator_Y_point: docs[0].Elevator[0].Point.coordinates[1],
       Elevator_X_point: docs[0].Elevator[0].Point.coordinates[0],
 
+      
+    
+    
       Lift_Y_point: docs[0].Lift[0].Point.coordinates[1],
       Lift_X_point: docs[0].Lift[0].Point.coordinates[0],
-  
+      
+
+
     });
 
   })
