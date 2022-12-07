@@ -76,6 +76,7 @@ router.get("/", async function (req, res) {
       Elevator_Y : Elevator_Y,
       Elevator_length : docs[0].Elevator.length,
       // 해당 역의 모든 리프트의 위치가 저장된 배열 
+      Lift_length : docs[0].Lift.length,
       Lift_X : Lift_X ,
       Lift_Y : Lift_Y,
       array_sample : ["안녕","하세요"],
