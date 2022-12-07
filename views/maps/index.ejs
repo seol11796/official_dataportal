@@ -128,14 +128,28 @@
         </div>
       </div>
       <div class="backgroud_image">
+        <% if(isAuthenticated){ %>
+          
         <button
-          type="submit"
-          class="location_button"
-          type="submit"
-          onclick="location.href='/station?subway_name=<%= station_name %>'"
-        >
-          <h2 class="location_icon">👇</h2>
-        </button>
+        type="submit"
+        class="location_button"
+        type="submit"
+        onclick="location.href='/station?subway_name=<%= station_name %>'"
+      >
+        <h2 class="location_icon">👇</h2>
+      </button>
+        <li class="nav-item">
+          
+         
+        </li>
+        <li class="nav-item"><a href="/logout" class="nav-link">Logout</a></li>
+        <% } else { %>
+        
+        <% } %>
+
+
+
+
       </div>
     </div>
   </body>
