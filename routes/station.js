@@ -39,8 +39,26 @@ router.get("/", async function (req, res) {
   );
 
 
+
+
   target.find({StationName:req.query.subway_name}).then((docs) => {
+
     //console.log(docs);
+    Elevator_X = []
+    Elevator_Y = []
+    Lift_X = []
+    Lift_Y = []
+
+    for (var i =0; i < docs[0].Elevator.length; i++){
+      Elevator_X.push(docs[0].Elevator[i].Point.coordinates[0]);
+      Elevator_Y.push(docs[0].Elevator[i].Point.coordinates[1]);
+    }
+
+      for (var i =0; i < docs[0].Lift.length; i++){
+      Lift_X.push(docs[0].Lift[i].Point.coordinates[0]);
+      Lift_Y.push(docs[0].Lift[i].Point.coordinates[1]);
+    }
+    
     console.log(docs[0].Elevator.length);
     console.log("Elevator")
     console.log(docs[0].Elevator[0].Point.coordinates[0]);
@@ -50,7 +68,16 @@ router.get("/", async function (req, res) {
     console.log(docs[0].Lift[0].Point.coordinates[0]);
     console.log(docs[0].Lift[0].Point.coordinates[1]);
 
+
+
     res.render("stations/about", {
+      // 해당 역의 모든 엘리베이터의 위치가 저장된 배열 
+      Elevator_X : Elevator_X ,
+      Elevator_Y : Elevator_Y,
+      Elevator_length : docs[0].Elevator.length,
+      // 해당 역의 모든 리프트의 위치가 저장된 배열 
+      Lift_X : Lift_X ,
+      Lift_Y : Lift_Y,
       array_sample : ["안녕","하세요"],
       //"건대입구역" 등 '역'까지 포함한 형태
       station_name: req.query.subway_name,
