@@ -6,7 +6,6 @@
 <script type="text/javascript" src="https://maps.google.com/maps/api/js?key=AIzaSyAYtQfNGdVhFqHsQt0OgLjojPwkM5M5aM8" ></script>
     <style>
       #map_ma {width:100%; height:400px; clear:both; border:solid 1px red;}
-
       .favorite_button {
         border-radius: 3rem;
         background-color: #0a0a23;
@@ -26,7 +25,6 @@
         border: 5px solid rgba(0, 1, 2, 0);
         margin-bottom: 0.4cm;
       }
-
       .ela {
         margin-top:1.1cm;
         background-color: rgb(255, 255, 255);
@@ -35,13 +33,10 @@
         font-size:larger;
         font-weight: 600;
       }
-
       .hl{
         color: rgb(82, 81, 81);
         font-weight: 600;
       }
-
-
     </style>
     <%- include('../partials/head') %>
   </head>
@@ -101,74 +96,63 @@
                 <div>
                   
                   <div class="ela">엘리베이터와 리프트 위치를 아래 지도에서 확인 가능합니다. </div>
-                  <div><%= array_sample[0]%><%= array_sample[1]%></div>
+                  <div>
+                   <%= Elevator_Y%> 
+                   <%= Elevator_Y[0]%>
+                   <%= Elevator_X%>
+                 </div>
                   <div id="map_ma"></div>
                   <script type="text/javascript">
           
-                    // elevator 
-                    $(document).ready(function() {
-                  var myLatlng = new google.maps.LatLng(37.539922,127.070609); // 위치값 위도 경도
-          
-                  var Elevator_Y_point = "<%= Elevator_Y_point%>"; 
-                  var Elevator_X_point = "<%= Elevator_X_point%>"; 
-                  var Lift_Y_point = "<%= Lift_Y_point%>"; 
-                  var Lift_X_point = "<%= Lift_X_point%>";
-                  //var Y_point			= 37.539922;	// Y 좌표
-                  //var X_point			= 127.070609;		// X 좌표
-                  var zoomLevel		= 18;				// 지도의 확대 레벨 : 숫자가 클수록 확대정도가 큼
-                  var markerTitle		= "엘리베이터";		// 현재 위치 마커에 마우스를 오버을때 나타나는 정보
-                  var markerMaxWidth	= 300;				// 마커를 클릭했을때 나타나는 말풍선의 최대 크기
-                
-                // 말풍선 내용
-                  var contentString	= '<div>' +
-                  '<h2>엘리베이터</h2>'+
-                  '<p>이 위치에 엘리베이터가 있습니다.</p>' +
-                  
-                  '</div>';
-                
-                  var myLatlng = new google.maps.LatLng(Elevator_Y_point, Elevator_X_point);
-                  var mapOptions = {
-                            zoom: zoomLevel,
-                            center: myLatlng,
-                            mapTypeId: google.maps.MapTypeId.ROADMAP
-                          }
-                  var map = new google.maps.Map(document.getElementById('map_ma'), mapOptions);
-                  var marker = new google.maps.Marker({
-                                      position: myLatlng,
-                                      map: map,
-                                      title: markerTitle
-                  });
-                  var infowindow = new google.maps.InfoWindow(
-                                        {
-                                          content: contentString,
-                                          maxWizzzdth: markerMaxWidth
-                                        }
-                      );
-          
                     
-                  google.maps.event.addListener(marker, 'click', function() {
-                    infowindow.open(map, marker);
-                  
-                  }  );      
-                });
           
           
                 $(document).ready(function() {
-                  var myLatlng = new google.maps.LatLng(37.539922,127.070609); // 위치값 위도 경도
-          
-                  var Elevator_Y_point = "<%= Elevator_Y_point%>"; 
-                  var Elevator_X_point = "<%= Elevator_X_point%>"; 
-                  var Lift_Y_point = "<%= Lift_Y_point%>"; 
-                  var Lift_X_point = "<%= Lift_X_point%>";
-                  //var Y_point			= 37.539922;	// Y 좌표
-                  //var X_point			= 127.070609;		// X 좌표
-                  var zoomLevel		= 18;				// 지도의 확대 레벨 : 숫자가 클수록 확대정도가 큼
+                  
+
+                  var elevator_x ;
+                  var elevator_y ;
+
+              
+                console.log("js 개별 엘리베이터 확인");
+                elevator_x ="<%= Elevator_X[0]%>"; 
+                elevator_y ="<%= Elevator_Y[0]%>";
+              
+                console.log("<%= Elevator_Y[0]%>");
+                console.log(elevator_y);
+                 console.log("<%= Elevator_X[0]%>");
+                 console.log(elevator_x);
+                 console.log("2번재 엘리베이터 잘 찍히는지 확인");
+                 console.log("<%= Elevator_Y[1]%>");
+                 console.log("<%= Elevator_X[1]%>");
+                 
+                elevator_length = "<%= Elevator_length%>";
+                 
+                elevator_y_array = JSON.parse('<%- JSON.stringify(Elevator_Y) %>'); 
+                elevator_x_array = JSON.parse('<%- JSON.stringify(Elevator_X) %>'); 
+                console.log("새로운 방식");
+                console.log(elevator_y_array);
+                console.log(elevator_x_array);
+                  
+
+
+                 console.log("js 전체 엘리베이터 집합");
+                  console.log(elevator_x_array);
+                  console.log(elevator_y_array);
+                  console.log(elevator_x_array.length);
+
+
+                  console.log("엘리베이터 개수");
+                 console.log("<%= Elevator_length%>");
+              
+                 
+                 var zoomLevel		= 18;				// 지도의 확대 레벨 : 숫자가 클수록 확대정도가 큼
                   var markerTitle		= "엘리베이터";		// 현재 위치 마커에 마우스를 오버을때 나타나는 정보
                   var markerTitle2 = "리프트"
                   var markerMaxWidth	= 300;				// 마커를 클릭했을때 나타나는 말풍선의 최대 크기
-                
+                    
                 // 말풍선 내용
-                  var contentString	= '<div>' +
+                   var contentString	= '<div>' +
                   '<h2>엘리베이터</h2>'+
                   '<p>이 위치에 엘리베이터가 있습니다.</p>' +
                   
@@ -179,72 +163,110 @@
                   '<p>이 위치에 리프트가 있습니다.</p>' +
                   
                   '</div>';
-                    
 
-                    
-                  var myLatlng = new google.maps.LatLng(Elevator_Y_point, Elevator_X_point);
+                for(var i =0; i<elevator_length; i++){
+                  console.log("for잘 돌아간다 ");
+                  console.log(elevator_y_array[i]);
+                  console.log(elevator_x_array[i]);
                   
-                  var myLatlng2 = new google.maps.LatLng(Lift_Y_point, Lift_X_point);
-          
-          
+
+                 var myLatlng = new google.maps.LatLng(elevator_y_array[0],elevator_x_array[0]);
+                 
+                
+
+                  //var myLatlng2 = new google.maps.LatLng(elevator_y_array[2],elevator_x_array[2]);
                   var mapOptions = {
                             zoom: zoomLevel,
                             center: myLatlng,
                             mapTypeId: google.maps.MapTypeId.ROADMAP
                           }
-          
-          
+                  // var mapOptions_sample = {
+                  //           zoom: zoomLevel,
+                  //           center: myLatlng2,
+                  //           mapTypeId: google.maps.MapTypeId.ROADMAP
+                  //         }
                   var map = new google.maps.Map(document.getElementById('map_ma'), mapOptions);
-                  var marker = new google.maps.Marker({
-                                      position: myLatlng,
-                                      map: map,
-                                      title: markerTitle
-                  });
-          
-                  var marker2 = new google.maps.Marker({
-                                      position: myLatlng2,
-                                      map: map,
-                                      title: markerTitle2
-                  });
-                  
-               
+                  //var map_sample = new google.maps.Map(document.getElementById('map_ma'), mapOptions);
+                  // var marker = new google.maps.Marker({
+                  //                     position: myLatlng,
+                  //                     map: map,
+                  //                     title: markerTitle
+                  // });
 
-                  var infowindow = new google.maps.InfoWindow(
-                                        {
-                                          content: contentString,
-                                          maxWizzzdth: markerMaxWidth
-                                        }
-                      );
-          
-                      var infowindow2 = new google.maps.InfoWindow(
-                                        {
-                                          content: contentString2,
-                                          maxWizzzdth: markerMaxWidth
-                                        }
-                      );
-           
-                  google.maps.event.addListener(marker, 'click', function() {
-                    infowindow.open(map, marker);
+                  var infowindow = new google.maps.InfoWindow();
+
+                  for(var i = 0; i<elevator_length; i++){
+                    marker = new google.maps.Marker({
+                      id:i,
+                      position:new google.maps.LatLng(elevator_y_array[i],elevator_x_array[i]),
+                      map:map
+                    });
+
+
+                    google.maps.event.addListener(marker,'click',(function(marker,i){
+                      return function(){
+                        infowindow.setContent("엘리베이터 위치");
+                        infowindow.open(map,marker);
+                      }
+                    })(marker,i));
+                    if(marker)
+                    {
+                      marker.addListener('click', function(){
+                      map.setZoom(15);
+                      map.setCenter(this.getPosition());
+
+                      });
+                    }
+                  }
+
+
+                  // var marker_sample = new google.maps.Marker({
+                  //                     position: myLatlng2,
+                  //                     map: map,
+                  //                     title: markerTitle
+                  // });
+
+                 
+
+                  // var infowindow = new google.maps.InfoWindow(
+                  //                       {
+                  //                         content: contentString,
+                  //                         maxWizzzdth: markerMaxWidth
+                  //                       }
+                  //     );
+                  // var infowindow_sample = new google.maps.InfoWindow(
+                  //                       {
+                  //                         content: contentString,
+                  //                         maxWizzzdth: markerMaxWidth
+                  //                       }
+                  //     );
+
+
+                  //   google.maps.event.addListener(marker, 'click', function() {
+                  //   infowindow.open(map, marker);
                   
-                  }  );      
-          
-                  google.maps.event.addListener(marker2, 'click', function() {
-                    infowindow2.open(map, marker2);
+                  // }  );   
+
                   
-                  }  );      
+                  // google.maps.event.addListener(marker_sample, 'click', function() {
+                  //   infowindow_sample.open(map, marker_sample);
+                  
+                  // }  );   
+
+                }  
+         
+                  
+          
+                    
+                
              
                 });
           
-                    </script>
-              
-                    
-          
+                    </script>        
           
                 </div>
           
-          
-                
-          
+                  
           
                 </div>
 
